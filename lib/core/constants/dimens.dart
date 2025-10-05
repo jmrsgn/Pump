@@ -1,0 +1,38 @@
+class TextFieldDimens {
+  // Padding
+  static const double paddingVertical = 16.0;
+  static const double paddingHorizontal = 20.0;
+
+  // Radius
+  static const double radius = 8.0;
+
+  // Border
+  static const double enabledBorderWidth = 2.0;
+  static const double focusedBorderWidth = 3.0;
+
+  // Font Size
+  static const double title = 36.0;
+  static const double subtitle = 24.0;
+  static const double description = 16.0;
+}
+
+class ScaffoldDimens {
+  static const double padding = 14.0;
+}
+
+class ButtonDimens {
+  // Padding
+  static const double paddingVertical = 8.0;
+  static const double paddingHorizontal = 16.0;
+
+  // Radius
+  static const double radius = 8.0;
+
+  // Other
+  static const double width120 = 120.0;
+}
+
+class MarginDimens {
+  static const double margin20 = 20.0;
+  static const double margin40 = 40.0;
+}

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../core/constants.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hint;
@@ -12,7 +11,6 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.hint,
     required this.controller,
-    required InputDecoration decoration,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.prefixIcon,
@@ -26,12 +24,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hint,
-        prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: TextFieldDimens.paddingVertical,
-          horizontal: TextFieldDimens.paddingHorizontal,
-        ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        prefixIcon: prefixIcon == null ? null : Icon(prefixIcon),
       ),
     );
   }
