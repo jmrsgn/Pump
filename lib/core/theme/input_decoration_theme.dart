@@ -19,7 +19,7 @@ class AppInputDecorations {
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
-        color: Colors.orange,
+        color: AppColors.primary,
         width: TextFieldDimens.focusedBorderWidth,
       ),
       borderRadius: BorderRadius.all(Radius.circular(TextFieldDimens.radius)),

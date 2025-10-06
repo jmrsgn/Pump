@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pump/core/constants/strings.dart';
+import 'package:pump/core/routes.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
 import 'package:pump/core/widgets/custom_text_field.dart';
 import 'package:pump/core/constants/dimens.dart';
@@ -14,15 +15,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen extends State<LoginScreen> {
+  bool _isLoading = false;
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  void login() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    Navigator.pushReplacementNamed(context, AppRoutes.mainFeed);
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: CustomScaffold(
-        title: AppStrings.login,
+        isLoading: _isLoading,
         body: Stack(
           fit: StackFit.expand,
           alignment: Alignment.center,
@@ -99,7 +115,7 @@ class _LoginScreen extends State<LoginScreen> {
                         width: ButtonDimens.width120,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange, // TODO: Fix
+                            backgroundColor: AppColors.primary,
                             foregroundColor: AppColors.textPrimary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
@@ -115,10 +131,10 @@ class _LoginScreen extends State<LoginScreen> {
                             final username = _usernameController.text.trim();
                             final password = _passwordController.text.trim();
 
+                            login();
+
                             if (username.isNotEmpty && password.isNotEmpty) {
                               // TODO proceed with Auth process then go to feed
-                              print(username);
-                              print(password);
                             }
                           },
                           child: const Text(
