@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pump/core/routes.dart';
 import 'package:pump/core/theme/app_theme.dart';
-import 'package:pump/features/auth/presentation/screens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'Pump',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.defaultTheme,
-      home: const LoginScreen(),
+      initialRoute: AppRoutes.login,
+      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }
