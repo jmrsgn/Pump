@@ -24,6 +24,8 @@ class AppColors {
   static const Color error = Color(0xFFF44336);
   static const Color warning = Color(0xFFFFC107);
 
+  static const Color white = textPrimary;
+
   // 🩶 Overlay
   static const Color overlay = Color(0x66000000); // black with 40% opacity
 }

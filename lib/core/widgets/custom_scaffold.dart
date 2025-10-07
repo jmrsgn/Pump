@@ -9,6 +9,7 @@ class CustomScaffold extends StatelessWidget {
   final Color? backgroundColor;
   final AppBar? appBar;
   final bool isLoading;
+  final Widget? drawer;
 
   const CustomScaffold({
     super.key,
@@ -19,13 +20,15 @@ class CustomScaffold extends StatelessWidget {
     this.backgroundColor,
     this.appBar,
     this.isLoading = false,
+    this.drawer,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: drawer,
       backgroundColor: backgroundColor ?? Colors.white,
-      appBar: appBar,
+      appBar: appBar ?? appBar,
       body: Stack(
         children: [
           SafeArea(child: body),
