@@ -33,6 +33,19 @@ class ButtonDimens {
 }
 
 class MarginDimens {
+  static const double margin10 = 10.0;
   static const double margin20 = 20.0;
+  static const double margin30 = 30.0;
   static const double margin40 = 40.0;
+}
+
+class PaddingDimens {
+  static const double padding10 = 10.0;
+  static const double padding20 = 20.0;
+  static const double padding40 = 40.0;
+}
+
+class IconDimens {
+  static const double iconSizeMedium = 24.0;
+  static const double iconSizeLarge = 58.0;
 }
