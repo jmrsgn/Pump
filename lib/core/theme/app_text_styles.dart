@@ -49,7 +49,7 @@ class AppTextStyles { // TODO: CONTINUE
   static final TextStyle button = base.copyWith(
     fontSize: 16,
     fontWeight: FontWeight.bold,
-    color: AppColors.backgroundLight,
+    color: Colors.white,// TODO
   );
 
   // 🧾 Captions or labels

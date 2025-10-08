@@ -20,15 +20,15 @@ class _LoginScreen extends State<LoginScreen> {
   final _passwordController = TextEditingController();
 
   void login() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() {
-      _isLoading = false;
-    });
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    //
+    // await Future.delayed(const Duration(seconds: 2));
+    //
+    // setState(() {
+    //   _isLoading = false;
+    // });
 
     Navigator.pushReplacementNamed(context, AppRoutes.mainFeed);
   }

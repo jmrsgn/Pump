@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/dimens.dart';
 import 'package:pump/core/routes.dart';
-import 'package:pump/core/theme/app_colors.dart';
+import 'package:pump/core/widgets/app_drawer.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
-
-import '../../../../core/theme/app_text_styles.dart';
+import 'package:pump/features/auth/presentation/widgets/post_widget.dart';
+import '../../../../core/theme/app_colors.dart';
 
 class MainFeedScreen extends StatefulWidget {
   const MainFeedScreen({super.key});
@@ -47,78 +46,26 @@ class _MainFeedScreen extends State<MainFeedScreen> {
           ),
         ),
       ),
-      backgroundColor: AppColors.backgroundDark,
-      drawer: _MainFeedDrawer(onSignOut: signOut),
-      body: const Center(
-        // TODO: Add feed
+      backgroundColor: AppColors.background,
+      drawer: AppDrawer(onSignOut: signOut, selectedRoute: ''),
+      body: ListView.builder(
+        itemCount: 6,
+        itemBuilder: (context, index) {
+          return PostWidget(
+            description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquam purus urna, in fringilla massa dictum lacinia. Fusce vel felis et nunc rutrum sagittis. Etiam ac volutpat sapien.',
+            author: 'JM injured',
+            authorImageUrl: '',
+            datePosted: '10/08/25',
+          );
+        },
       ),
-    );
-  }
-}
-
-class _MainFeedDrawer extends StatelessWidget {
-  final VoidCallback onSignOut;
-
-  const _MainFeedDrawer({required this.onSignOut});
-
-  void signOut() {
-    // TODO: actual sign-out logic (Firebase/Auth/JWT clearing, etc.)
-    onSignOut();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: AppColors.backgroundDark,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            padding: EdgeInsets.symmetric(horizontal: PaddingDimens.padding20),
-            decoration: const BoxDecoration(color: AppColors.backgroundDark),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.person,
-                  size: IconDimens.iconSizeLarge,
-                  color: AppColors.white,
-                ),
-                const SizedBox(width: MarginDimens.margin30),
-                Expanded(
-                  child: Container(
-                    color: AppColors.backgroundDark,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('John', style: AppTextStyles.heading1),
-                        Text(
-                          'marasiganjohnmartin@gmail.com',
-                          style: AppTextStyles.small,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          ListTile(
-            title: const Text('Home'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
-          ),
-          ListTile(
-            title: const Text('Sign out'),
-            onTap: () {
-              signOut();
-            },
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // TODO:
+        },
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.add),
       ),
     );
   }

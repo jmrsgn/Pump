@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
 
+/// AppColors holds all color constants used throughout the app.
+/// Theme: Dark Orange + Black (Fitness / Energy / Strength)
 class AppColors {
-  // 🟧 Brand palette
-  static const Color primary = Color(0xFFF57C00); // Orange 700
-  static const Color primaryLight = Color(0xFFFFA726); // Orange 400
-  static const Color primaryDark = Color(0xFFEF6C00); // Orange 800
+  // 🌆 Core Brand Colors
+  static const Color primary = Color(0xFFFF7A00);      // Main accent orange
+  static const Color primaryDark = Color(0xFFCC5E00);  // Pressed/active state
+  static const Color primaryLight = Color(0xFFFFA94D); // Hover/focus/gradients
 
-  // ⚫ Backgrounds
-  static const Color backgroundDark = Color(0xFF121212);
-  static const Color backgroundLight = Color(0xFFFFFFFF);
+  // 🎨 Backgrounds & Surfaces
+  static const Color background = Color(0xFF0D0D0D);   // App background
+  static const Color surface = Color(0xFF1A1A1A);      // Card/AppBar surfaces
+  static const Color surfaceLight = Color(0xFF1C1C1C); // Slightly lighter surface
 
-  // 📝 Text colors
-  static const Color textPrimary = Color(0xFFFFFFFF);
-  static const Color textSecondary = Color(0xFFB0B0B0);
-  static const Color textHint = Color(0xFF9E9E9E);
+  // 📝 Text Colors
+  static const Color textPrimary = Color(0xFFEAEAEA);   // Default readable text
+  static const Color textSecondary = Color(0xFFB3B3B3); // Captions, subtitles
+  static const Color textDisabled = Color(0xFF666666);  // Disabled/placeholder
+  static const Color textHint = Color(0xFF777777);      // Hint text inside inputs
+  static const Color textOnPrimary = Colors.white;      // Text on orange
 
-  // 🔲 Borders
-  static const Color borderLight = Color(0xFFDDDDDD);
-  static const Color borderDark = Color(0xFF333333);
+  // ⚙️ Functional Colors
+  static const Color success = Color(0xFF00C853); // Green for success
+  static const Color warning = Color(0xFFFFA000); // Orange-yellow for warnings
+  static const Color error = Color(0xFFE53935);   // Red for errors
+  static const Color info = Color(0xFF29B6F6);    // Blue for info banners
 
-  // ✅ State colors
-  static const Color success = Color(0xFF4CAF50);
-  static const Color error = Color(0xFFF44336);
-  static const Color warning = Color(0xFFFFC107);
+  // 🧭 UI Components
+  static const Color appBar = surface;
+  static const Color bottomNav = Color(0xFF121212);
+  static const Color drawerBackground = Color(0xFF121212);
+  static const Color drawerSelected = primary;
+  static const Color drawerUnselected = textSecondary;
 
-  static const Color white = textPrimary;
+  // 🧩 Inputs & Borders
+  static const Color inputBackground = Color(0xFF2A2A2A);
+  static const Color inputBorder = Color(0xFF333333);
+  static const Color inputFocusedBorder = primary;
+  static const Color divider = Color(0xFF333333);
 
-  // 🩶 Overlay
-  static const Color overlay = Color(0x66000000); // black with 40% opacity
+  // ⚫ Overlays / Shadows
+  static const Color overlay = Color(0x80000000); // 50% black overlay
+  static const Color shadow = Color(0x33000000);  // 20% black shadow
 }
