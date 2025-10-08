@@ -5,7 +5,14 @@ import 'package:pump/features/posts/presentation/screens/main_feed.dart';
 
 class AppRoutes {
   static const String login = '/login';
+  static const String register = '/register';
   static const String mainFeed = '/main_feed';
+  static const String profile = '/profile';
+  static const String messages = '/messages';
+  static const String favorites = '/favorites';
+  static const String contact = '/contact';
+  static const String feedback = '/feedback';
+  static const String about = '/about';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
