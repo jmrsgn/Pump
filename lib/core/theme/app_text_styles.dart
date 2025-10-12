@@ -57,4 +57,9 @@ class AppTextStyles { // TODO: CONTINUE
     fontSize: 12,
     color: AppColors.textSecondary,
   );
+
+  static final TextStyle copyright = base.copyWith(
+    fontSize: 12,
+    color: AppColors.textSecondary,
+  );
 }

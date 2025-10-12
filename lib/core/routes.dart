@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/strings.dart';
-import 'package:pump/features/auth/presentation/screens/login.dart';
-import 'package:pump/features/posts/presentation/screens/main_feed.dart';
+import 'package:pump/core/screens/invalid_route.dart';
+import 'package:pump/features/about/about.dart';
+import 'package:pump/features/auth/presentation/login/login.dart';
+import 'package:pump/features/posts/presentation/main_feed/main_feed.dart';
 
 class AppRoutes {
   static const String login = '/login';
@@ -20,12 +21,10 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case mainFeed:
         return MaterialPageRoute(builder: (_) => const MainFeedScreen());
+      case about:
+        return MaterialPageRoute(builder: (_) => const AboutScreen());
       default:
-        return MaterialPageRoute(
-          builder: (_) => const Scaffold(
-            body: Center(child: Text(AppStrings.routeNotFound)),
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
     }
   }
 }

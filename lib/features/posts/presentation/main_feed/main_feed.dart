@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pump/core/constants/strings.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/widgets/app_drawer.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
-import 'package:pump/features/auth/presentation/widgets/post_widget.dart';
+import 'package:pump/features/posts/presentation/widgets/post_widget.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class MainFeedScreen extends StatefulWidget {
@@ -49,11 +50,10 @@ class _MainFeedScreen extends State<MainFeedScreen> {
       backgroundColor: AppColors.background,
       drawer: AppDrawer(onSignOut: signOut, selectedRoute: ''),
       body: ListView.builder(
-        itemCount: 6,
+        itemCount: 3,
         itemBuilder: (context, index) {
           return PostWidget(
-            description:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquam purus urna, in fringilla massa dictum lacinia. Fusce vel felis et nunc rutrum sagittis. Etiam ac volutpat sapien.',
+            description: AppStrings.placeholderParagraph,
             author: 'JM injured',
             authorImageUrl: '',
             datePosted: '10/08/25',

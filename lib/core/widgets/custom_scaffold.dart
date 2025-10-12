@@ -1,34 +1,37 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
 
 class CustomScaffold extends StatelessWidget {
   final Widget body;
   final List<Widget>? actions;
   final Widget? floatingActionButton;
-  final bool showBackButton;
   final Color? backgroundColor;
   final AppBar? appBar;
   final bool isLoading;
   final Widget? drawer;
+  final VoidCallback? onLeadingPressed;
+  final Widget? leadingIcon;
 
   const CustomScaffold({
     super.key,
     required this.body,
     this.actions,
     this.floatingActionButton,
-    this.showBackButton = false,
-    this.backgroundColor,
+    this.backgroundColor = AppColors.background,
     this.appBar,
     this.isLoading = false,
     this.drawer,
+    this.onLeadingPressed,
+    this.leadingIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: drawer,
-      backgroundColor: backgroundColor ?? Colors.white,
-      appBar: appBar ?? appBar,
+      backgroundColor: backgroundColor,
+      appBar: appBar,
       body: Stack(
         children: [
           SafeArea(child: body),
