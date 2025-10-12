@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pump/core/constants/strings.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/theme/app_theme.dart';
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Pump',
+      title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.defaultTheme,
       initialRoute: AppRoutes.login,

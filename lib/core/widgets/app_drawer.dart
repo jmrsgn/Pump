@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pump/core/constants/strings.dart';
 import 'package:pump/core/enums/app_menu_item.dart';
-import 'package:pump/core/routes.dart';
-import '../constants/dimens.dart';
 
+import '../constants/dimens.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -94,7 +93,7 @@ class AppDrawer extends StatelessWidget {
       selectedTileColor: AppColors.drawerSelected,
       onTap: () {
         if (selectedRoute != item.route) {
-          // Navigator.pushReplacementNamed(context, item.route); // TODO
+          Navigator.pushNamed(context, item.route);
         } else {
           Navigator.pop(context); // just close the drawer
         }
