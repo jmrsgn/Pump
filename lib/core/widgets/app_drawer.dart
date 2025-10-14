@@ -92,11 +92,10 @@ class AppDrawer extends StatelessWidget {
       selected: isSelected,
       selectedTileColor: AppColors.drawerSelected,
       onTap: () {
+        Navigator.pop(context); // Close the drawer first
+
         if (selectedRoute != item.route) {
           Navigator.pushNamed(context, item.route);
-          Navigator.pop(context); // Close the drawer
-        } else {
-          Navigator.pop(context); // Just close the drawer
         }
       },
     );

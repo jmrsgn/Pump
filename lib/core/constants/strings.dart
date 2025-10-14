@@ -26,6 +26,13 @@ class AppStrings {
   static const mobileNo = "Mobile No.";
   static const github = "GitHub";
 
+  // Profile Page
+  static const editProfile = "Edit Profile";
+  static const paymentMethod = "Payment Method";
+  static const clients = "Clients";
+  static const coach = "Coach";
+  static const help = "Help";
+
   // Licenses and Copyright
   static const String license = "";
   static String get copyright => '© ${DateTime.now().year} All Rights Reserved';
