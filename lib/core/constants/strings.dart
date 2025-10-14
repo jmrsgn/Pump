@@ -22,6 +22,9 @@ class AppStrings {
   static const howItWorks = "How it works";
   static const developer = "Developer";
   static const contactDetails = "Contact Details";
+  static const email = "Email";
+  static const mobileNo = "Mobile No.";
+  static const github = "GitHub";
 
   // Licenses and Copyright
   static const String license = "";
