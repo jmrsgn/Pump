@@ -120,16 +120,54 @@ class AboutScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Text(AppStrings.contact, style: AppTextStyles.heading3),
+                    Text(
+                      AppStrings.contactDetails,
+                      style: AppTextStyles.heading3,
+                    ),
                     UiUtils.addVerticalSpaceSmall(),
-                    // TODO: add cards for contact details
+                    _buildContactTile(
+                      title: AppStrings.email,
+                      subtitle: AppStrings.devEmail,
+                      leading: Icon(Icons.email),
+                    ),
+                    UiUtils.addVerticalSpaceExtraSmall(),
+                    _buildContactTile(
+                      title: AppStrings.mobileNo,
+                      subtitle: AppStrings.devMobileNo,
+                      leading: Icon(Icons.call),
+                    ),
+                    UiUtils.addVerticalSpaceExtraSmall(),
+                    _buildContactTile(
+                      title: AppStrings.github,
+                      subtitle: AppStrings.devGithubUsername,
+                      leading: Icon(Icons.code),
+                    ),
                   ],
                 ),
               ),
+              UiUtils.addVerticalSpaceExtraLarge(),
+              UiUtils.addCopyright(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildContactTile({
+    required String title,
+    required String subtitle,
+    required Widget leading,
+  }) {
+    return ListTile(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppDimens.dimen8),
+      ),
+      tileColor: AppColors.surface,
+      leading: leading,
+      trailing: IconButton(onPressed: null, icon: Icon(Icons.open_in_new)),
+      title: Text(title),
+      subtitle: Text(subtitle),
     );
   }
 }

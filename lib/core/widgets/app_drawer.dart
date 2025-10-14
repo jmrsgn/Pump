@@ -94,8 +94,9 @@ class AppDrawer extends StatelessWidget {
       onTap: () {
         if (selectedRoute != item.route) {
           Navigator.pushNamed(context, item.route);
+          Navigator.pop(context); // Close the drawer
         } else {
-          Navigator.pop(context); // just close the drawer
+          Navigator.pop(context); // Just close the drawer
         }
       },
     );

@@ -31,6 +31,10 @@ class UiUtils {
   }
 
   // Vertical Spaces
+  static Widget addVerticalSpaceExtraSmall() {
+    return SizedBox(height: AppDimens.dimen8);
+  }
+
   static Widget addVerticalSpaceSmall() {
     return SizedBox(height: AppDimens.dimen12);
   }
