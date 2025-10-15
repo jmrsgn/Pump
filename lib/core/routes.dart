@@ -3,7 +3,9 @@ import 'package:pump/core/screens/invalid_route.dart';
 import 'package:pump/features/about/about.dart';
 import 'package:pump/features/auth/presentation/login/login.dart';
 import 'package:pump/features/posts/presentation/main_feed/main_feed.dart';
-import 'package:pump/features/profile/presentation/user_profile/user_profile.dart';
+import 'package:pump/features/user/presentation/messages/messages.dart';
+
+import '../features/user/presentation/user_profile/user_profile.dart';
 
 class AppRoutes {
   static const String login = '/login';
@@ -26,6 +28,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const AboutScreen());
       case profile:
         return MaterialPageRoute(builder: (_) => const UserProfileScreen());
+      case messages:
+        return MaterialPageRoute(builder: (_) => const MessagesScreen(titleName: "John Martin Marasigan"));
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
     }

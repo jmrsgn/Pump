@@ -41,14 +41,8 @@ class UserProfileScreen extends StatelessWidget {
                     radius: AppDimens.dimen64,
                   ),
                   UiUtils.addVerticalSpaceMedium(),
-                  Text(
-                    "Name ng Client o Coach",
-                    style: AppTextStyles.heading3,
-                  ),
-                  Text(
-                    "sample@gmail.com",
-                    style: AppTextStyles.body,
-                  ),
+                  Text("Name ng Client o Coach", style: AppTextStyles.heading3),
+                  Text("sample@gmail.com", style: AppTextStyles.body),
                   UiUtils.addVerticalSpaceExtraSmall(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
