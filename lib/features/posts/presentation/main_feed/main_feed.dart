@@ -9,29 +9,14 @@ import '../../../../core/theme/app_colors.dart';
 class MainFeedScreen extends StatefulWidget {
   const MainFeedScreen({super.key});
 
-  State<StatefulWidget> createState() => _MainFeedScreen();
+  State<StatefulWidget> createState() => _MainFeedScreenState();
 }
 
-class _MainFeedScreen extends State<MainFeedScreen> {
+class _MainFeedScreenState extends State<MainFeedScreen> {
   bool _isLoading = false;
 
   void signOut() async {
-    // setState(() {
-    //   _isLoading = true;
-    // });
-    //
-    // await Future.delayed(const Duration(seconds: 2));
-    //
-    // setState(() {
-    //   _isLoading = false;
-    // });
-    //
-    // // Wait a short frame so UI updates before navigating
-    // await Future.delayed(Duration(milliseconds: 100));
-
     Navigator.pushReplacementNamed(context, AppRoutes.login);
-    // if (mounted) {
-    // }
   }
 
   @override
@@ -53,17 +38,15 @@ class _MainFeedScreen extends State<MainFeedScreen> {
         itemCount: 3,
         itemBuilder: (context, index) {
           return PostWidget(
-            description: AppStrings.placeholderParagraph,
-            author: 'JM injured',
-            authorImageUrl: '',
+            description: AppStrings.placeholderParagraph2,
+            author: 'John Martin',
+            authorImageUrl: 'assets/images/jm.jpg',
             datePosted: '10/08/25',
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO:
-        },
+        onPressed: () {},
         backgroundColor: AppColors.primary,
         child: const Icon(Icons.add),
       ),

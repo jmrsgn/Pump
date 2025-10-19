@@ -15,10 +15,10 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _LoginScreen();
+  State<StatefulWidget> createState() => _LoginScreenState();
 }
 
-class _LoginScreen extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -56,7 +56,7 @@ class _LoginScreen extends State<LoginScreen> {
             // Main content
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(AppDimens.dimen14),
+                padding: const EdgeInsets.all(AppDimens.spaceL),
                 child: Column(
                   mainAxisSize: MainAxisSize
                       .min, // Takes only as much as available height needed

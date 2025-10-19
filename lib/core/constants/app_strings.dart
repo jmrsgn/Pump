@@ -20,6 +20,11 @@ class AppStrings {
   static const dontHaveAnAccount = "Don't have an account?";
   static const registerHere = "Register here";
 
+  // Main Feed Page
+  static const like = "Like";
+  static const comment = "Comment";
+  static const share = "Share";
+
   // About Page
   static const aboutPage = "About page";
   static const inspiration = "Inspiration";

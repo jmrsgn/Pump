@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pump/core/constants/app_dimens.dart';
 import 'package:pump/core/theme/app_text_styles.dart';
+import 'package:pump/core/utils/ui_utils.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class PostWidget extends StatelessWidget {
@@ -23,37 +25,65 @@ class PostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.surface,
-      margin: EdgeInsets.only(bottom: AppDimens.dimen4),
+      margin: EdgeInsets.only(bottom: AppDimens.spaceXS),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: Padding(
-        padding: const EdgeInsets.all(AppDimens.dimen8),
+        padding: const EdgeInsets.all(AppDimens.spaceS),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header user info
             Container(
-              padding: const EdgeInsets.all(AppDimens.dimen4),
+              padding: const EdgeInsets.all(AppDimens.spaceXS),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const CircleAvatar(
-                    radius: AppDimens.dimen20,
-                    backgroundColor: AppColors.primary,
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                    ), // TODO fix color
+                    radius: AppDimens.radiusL,
+                    backgroundImage: AssetImage("assets/images/jm.jpg"),
                   ),
-                  SizedBox(width: AppDimens.dimen10),
-                  Expanded(child: Text(author, style: AppTextStyles.heading3)),
+
+                  UiUtils.addHorizontalSpaceM(),
+
+                  // Use Expanded to let name/status take flexible width
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          author,
+                          style: AppTextStyles.heading3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.circle,
+                              color: AppColors.success,
+                              size: 8,
+                            ),
+                            UiUtils.addHorizontalSpaceXS(),
+                            Text(
+                              AppStrings.active,
+                              style: AppTextStyles.caption,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Date pinned to the right
                   Text(datePosted, style: AppTextStyles.bodySmall),
                 ],
               ),
             ),
-            const SizedBox(height: AppDimens.dimen10),
+
+            UiUtils.addVerticalSpaceS(),
 
             // Post description
             Container(
-              padding: const EdgeInsets.all(AppDimens.dimen4),
+              padding: const EdgeInsets.all(AppDimens.spaceXS),
               child: Text(
                 description,
                 style: AppTextStyles.body,
@@ -61,7 +91,8 @@ class PostWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            const SizedBox(height: 10),
+
+            UiUtils.addVerticalSpaceS(),
 
             // Post image
             postImageUrl == null
@@ -75,18 +106,37 @@ class PostWidget extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-            const SizedBox(height: 10),
+
+            UiUtils.addVerticalSpaceS(),
 
             // Action buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                Icon(
-                  Icons.favorite_border,
-                  color: AppColors.textPrimary,
-                ), // TODO: add color for icons
-                Icon(Icons.comment_outlined, color: AppColors.textPrimary),
-                Icon(Icons.share, color: AppColors.textPrimary),
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.favorite_border, color: AppColors.textPrimary),
+                    UiUtils.addHorizontalSpaceXS(),
+                    Text(AppStrings.like, style: AppTextStyles.caption),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.mode_comment_outlined,
+                      color: AppColors.textPrimary,
+                    ),
+                    UiUtils.addHorizontalSpaceXS(),
+                    Text(AppStrings.comment, style: AppTextStyles.caption),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.share, color: AppColors.textPrimary),
+                    UiUtils.addHorizontalSpaceXS(),
+                    Text(AppStrings.share, style: AppTextStyles.caption),
+                  ],
+                ),
               ],
             ),
           ],
