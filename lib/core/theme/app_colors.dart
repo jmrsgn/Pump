@@ -41,5 +41,5 @@ class AppColors {
 
   // ⚫ Overlays / Shadows
   static const Color overlay = Color(0x80000000); // 50% black overlay
-  static const Color shadow = Color(0x33000000);  // 20% black shadow
+  static const Color shadow = Color(0x33000000); // 20% black shadow
 }

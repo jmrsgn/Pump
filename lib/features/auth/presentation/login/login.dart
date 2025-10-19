@@ -1,11 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/strings.dart';
+import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/routes.dart';
+import 'package:pump/core/theme/app_button_styles.dart';
+import 'package:pump/core/utils/ui_utils.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
 import 'package:pump/core/widgets/custom_text_field.dart';
-import 'package:pump/core/constants/dimens.dart';
+import 'package:pump/core/constants/app_dimens.dart';
 import 'package:pump/core/theme/app_colors.dart';
+
+import '../../../../core/theme/app_text_styles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -47,14 +51,12 @@ class _LoginScreen extends State<LoginScreen> {
             Image.asset('assets/images/home.png', fit: BoxFit.cover),
 
             // Dark overlay
-            Container(
-              color: Colors.black.withValues(alpha: 0.4), // 40% opacity
-            ),
+            Container(color: AppColors.overlay),
 
             // Main content
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(ScaffoldDimens.padding),
+                padding: const EdgeInsets.all(AppDimens.dimen14),
                 child: Column(
                   mainAxisSize: MainAxisSize
                       .min, // Takes only as much as available height needed
@@ -63,26 +65,19 @@ class _LoginScreen extends State<LoginScreen> {
                     // Top left section
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           AppStrings.appName,
-                          style: TextStyle(
-                            color: AppColors.textPrimary,
-                            fontSize: TextFieldDimens.title,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: AppTextStyles.heading1.copyWith(fontSize: 42),
                         ),
                         Text(
                           AppStrings.allYouNeedInOneApp,
-                          style: TextStyle(
-                            color: AppColors.textPrimary,
-                            fontSize: TextFieldDimens.description,
-                          ),
+                          style: AppTextStyles.body,
                         ),
                       ],
                     ),
 
-                    SizedBox(height: MarginDimens.margin40),
+                    UiUtils.addVerticalSpaceXXL(),
 
                     // Middle section
                     Center(
@@ -94,7 +89,7 @@ class _LoginScreen extends State<LoginScreen> {
                             prefixIcon: Icons.person,
                           ),
 
-                          const SizedBox(height: MarginDimens.margin20),
+                          UiUtils.addVerticalSpaceM(),
 
                           CustomTextField(
                             hint: AppStrings.password,
@@ -106,27 +101,15 @@ class _LoginScreen extends State<LoginScreen> {
                       ),
                     ),
 
-                    SizedBox(height: MarginDimens.margin20),
+                    UiUtils.addVerticalSpaceM(),
 
                     // Lower right section
                     Align(
                       alignment: AlignmentGeometry.bottomRight,
                       child: SizedBox(
-                        width: ButtonDimens.width120,
+                        width: AppDimens.buttonSmallWidth,
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: AppColors.textPrimary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                ButtonDimens.radius,
-                              ),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              vertical: ButtonDimens.paddingVertical,
-                              horizontal: ButtonDimens.paddingHorizontal,
-                            ),
-                          ),
+                          style: AppButtonStyles.normal,
                           onPressed: () {
                             final username = _usernameController.text.trim();
                             final password = _passwordController.text.trim();
@@ -137,13 +120,7 @@ class _LoginScreen extends State<LoginScreen> {
                               // TODO proceed with Auth process then go to feed
                             }
                           },
-                          child: const Text(
-                            AppStrings.login,
-                            style: TextStyle(
-                              color: AppColors.textPrimary,
-                              fontSize: TextFieldDimens.description,
-                            ),
-                          ),
+                          child: const Text(AppStrings.login),
                         ),
                       ),
                     ),
@@ -156,25 +133,20 @@ class _LoginScreen extends State<LoginScreen> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: EdgeInsets.only(bottom: MarginDimens.margin20),
+                padding: EdgeInsets.only(bottom: AppDimens.spaceXXL),
                 child: RichText(
                   text: TextSpan(
-                    text: "Don't have an account? ",
-                    style: TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: TextFieldDimens.description,
-                    ),
+                    text: "${AppStrings.dontHaveAnAccount} ",
+                    style: AppTextStyles.bodySmall,
                     children: [
                       TextSpan(
-                        text: "Register here",
-                        style: TextStyle(
-                          color: Colors.orange, // TODO: Fix
-                          fontSize: TextFieldDimens.description,
+                        text: AppStrings.registerHere,
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.primary,
                           fontWeight: FontWeight.bold,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            print("Go to registration screen");
                             // TODO: Navigate to registration screen
                           },
                       ),

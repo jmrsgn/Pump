@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/strings.dart';
+import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/enums/app_menu_item.dart';
+import 'package:pump/core/utils/ui_utils.dart';
 
-import '../constants/dimens.dart';
+import '../constants/app_dimens.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -16,8 +17,8 @@ class AppDrawer extends StatelessWidget {
     super.key,
     required this.selectedRoute,
     required this.onSignOut,
-    this.userName = "John",
-    this.email = "marasiganjohnmartin@gmail.com",
+    this.userName = "User1",
+    this.email = "sample@gmail.com",
   });
 
   @override
@@ -28,18 +29,20 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            padding: EdgeInsets.symmetric(horizontal: PaddingDimens.padding20),
+            padding: EdgeInsets.symmetric(horizontal: AppDimens.drawerPadding),
             decoration: const BoxDecoration(color: AppColors.background),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.person,
-                  size: IconDimens.iconSizeLarge,
-                  color: Colors.white,
+                  size: AppDimens.drawerIconAvatarSize,
+                  color: AppColors.textOnPrimary,
                 ),
-                const SizedBox(width: MarginDimens.margin30),
+
+                UiUtils.addHorizontalSpaceXXL(),
+
                 Expanded(
                   child: Container(
                     color: AppColors.background,
@@ -48,7 +51,7 @@ class AppDrawer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(userName, style: AppTextStyles.heading1),
-                        Text(email, style: AppTextStyles.small),
+                        Text(email, style: AppTextStyles.bodySmall),
                       ],
                     ),
                   ),
@@ -60,12 +63,13 @@ class AppDrawer extends StatelessWidget {
           for (final item in AppMenuItem.values)
             _buildDrawerItem(context: context, item: item),
 
-          const Divider(color: Colors.white30),
+          const Divider(color: Colors.white24), // Border before sign out tile
+
           ListTile(
-            leading: const Icon(Icons.logout, color: Colors.redAccent),
+            leading: const Icon(Icons.logout, color: AppColors.error),
             title: const Text(
               AppStrings.signOut,
-              style: TextStyle(color: Colors.redAccent),
+              style: TextStyle(color: AppColors.error),
             ),
             onTap: onSignOut,
           ),

@@ -1,65 +1,91 @@
 import 'package:flutter/material.dart';
+
 import 'app_colors.dart';
 
-class AppTextStyles { // TODO: CONTINUE
-  // 🧱 Base TextStyle
-  static const TextStyle base = TextStyle(
-    fontFamily: 'Roboto', // or your custom font
-    color: AppColors.textPrimary,
+// TODO: fix comments provided by chatGpt
+class AppTextStyles {
+  // 🧭 AppBar Title
+  static const appBarTitle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.2,
   );
 
   // 🏷️ Headings
-  static final TextStyle heading1 = base.copyWith(
-    fontSize: 32,
+  static const heading1 = TextStyle(
+    fontSize: 28,
     fontWeight: FontWeight.bold,
+    height: 1.3,
+    letterSpacing: 0.2,
   );
 
-  static final TextStyle heading2 = base.copyWith(
+  static const heading2 = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w600,
+    height: 1.3,
   );
 
-  static final TextStyle heading3 = base.copyWith(
+  static const heading3 = TextStyle(
     fontSize: 20,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
+    height: 1.3,
   );
 
-  // 💬 Body text
-  static final TextStyle body = base.copyWith(
+  // ✏️ Body Texts
+  static const bodyLarge = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.normal,
+    height: 1.5,
+    letterSpacing: 0.3,
+  );
+
+  static const body = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.normal,
+    height: 1.5,
   );
 
-  static final TextStyle bodyBold = base.copyWith(
+  static const bodySmall = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    height: 1.4,
+  );
+
+  // 🧾 Caption / Metadata
+  static const caption = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.2,
+  );
+
+  // 💬 Buttons
+  static const button = TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.5,
   );
 
-  static final TextStyle small = base.copyWith(
-    fontSize: 14,
-    color: AppColors.textSecondary,
-  );
+  // 💡 Input Fields
+  static const input = TextStyle(fontSize: 16, fontWeight: FontWeight.normal);
 
-  static final TextStyle hint = base.copyWith(
+  static const inputLabel = TextStyle(
     fontSize: 14,
+    fontWeight: FontWeight.w400,
     color: AppColors.textHint,
   );
 
-  // 🔘 Buttons
-  static final TextStyle button = base.copyWith(
-    fontSize: 16,
-    fontWeight: FontWeight.bold,
-    color: Colors.white,// TODO
+  // ⚠️ Error / Warning Text
+  static const error = TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    color: AppColors.error,
   );
 
-  // 🧾 Captions or labels
-  static final TextStyle caption = base.copyWith(
+  // 👣 Footer / Copyright
+  static const footer = TextStyle(
     fontSize: 12,
-    color: AppColors.textSecondary,
-  );
-
-  static final TextStyle copyright = base.copyWith(
-    fontSize: 12,
-    color: AppColors.textSecondary,
+    fontWeight: FontWeight.w300,
+    color: AppColors.textHint,
+    letterSpacing: 0.2,
   );
 }

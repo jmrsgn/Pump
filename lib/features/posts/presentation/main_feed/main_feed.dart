@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/strings.dart';
+import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/widgets/app_drawer.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';

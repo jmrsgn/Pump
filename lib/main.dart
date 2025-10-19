@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/strings.dart';
+import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/theme/app_theme.dart';
 

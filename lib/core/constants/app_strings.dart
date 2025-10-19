@@ -16,6 +16,10 @@ class AppStrings {
   static const signOut = "Sign out";
   static const goBack = "Go back";
 
+  // Login Page
+  static const dontHaveAnAccount = "Don't have an account?";
+  static const registerHere = "Register here";
+
   // About Page
   static const aboutPage = "About page";
   static const inspiration = "Inspiration";
@@ -32,6 +36,8 @@ class AppStrings {
   static const clients = "Clients";
   static const coach = "Coach";
   static const help = "Help";
+  static const active = "Active";
+  static const inactive = "Inactive";
 
   // Licenses and Copyright
   static const String license = "";

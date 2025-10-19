@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/strings.dart';
+import '../constants/app_strings.dart';
 import '../routes.dart';
 
 enum AppMenuItem {

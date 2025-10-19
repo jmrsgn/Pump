@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/dimens.dart';
+import 'package:pump/core/constants/app_dimens.dart';
 import 'package:pump/core/theme/app_text_styles.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -45,7 +45,7 @@ class PostWidget extends StatelessWidget {
                   ),
                   SizedBox(width: AppDimens.dimen10),
                   Expanded(child: Text(author, style: AppTextStyles.heading3)),
-                  Text(datePosted, style: AppTextStyles.hint),
+                  Text(datePosted, style: AppTextStyles.bodySmall),
                 ],
               ),
             ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/strings.dart';
+import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/theme/app_colors.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
 import 'package:pump/features/user/domain/message.dart';
 
-import '../../../../core/constants/dimens.dart';
+import '../../../../core/constants/app_dimens.dart';
 
 class _LocalColors {
   static const primary = Color(0xFFEC7216);

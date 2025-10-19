@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/strings.dart';
+import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/theme/app_text_styles.dart';
 import 'package:pump/core/utils/navigation_utils.dart';
 import 'package:pump/core/utils/ui_utils.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
 
-import '../../core/constants/dimens.dart';
+import '../../core/constants/app_dimens.dart';
 import '../../core/theme/app_colors.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -25,7 +25,7 @@ class AboutScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(AppDimens.dimen12),
+          padding: EdgeInsets.all(AppDimens.pagePadding),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,11 +35,8 @@ class AboutScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(AppStrings.aboutPage, style: AppTextStyles.heading1),
-                    UiUtils.addVerticalSpaceSmall(),
-                    Icon(
-                      Icons.question_mark,
-                      size: 150,
-                    ), // TODO: replace with app logo
+                    UiUtils.addVerticalSpaceS(),
+                    Icon(Icons.info, size: 150), // TODO: replace with app logo
                   ],
                 ),
               ),
@@ -47,56 +44,56 @@ class AboutScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    UiUtils.addVerticalSpaceSmall(),
+                    UiUtils.addVerticalSpaceS(),
                     Text(
                       AppStrings.placeholderParagraph2,
-                      style: AppTextStyles.body,
+                      style: AppTextStyles.bodySmall,
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
               ),
-              UiUtils.addVerticalSpaceLarge(),
-              UiUtils.addDivider(),
-              UiUtils.addVerticalSpaceLarge(),
+
+              _addDividerWithVerticalSpace(),
+
               Container(
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Text(AppStrings.inspiration, style: AppTextStyles.heading3),
-                    UiUtils.addVerticalSpaceSmall(),
+                    Text(AppStrings.inspiration, style: AppTextStyles.heading2),
+                    UiUtils.addVerticalSpaceS(),
                     Text(
                       AppStrings.placeholderParagraph,
-                      style: AppTextStyles.body,
+                      style: AppTextStyles.bodySmall,
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
               ),
-              UiUtils.addVerticalSpaceLarge(),
-              UiUtils.addDivider(),
-              UiUtils.addVerticalSpaceLarge(),
+
+              _addDividerWithVerticalSpace(),
+
               Container(
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Text(AppStrings.howItWorks, style: AppTextStyles.heading3),
-                    UiUtils.addVerticalSpaceSmall(),
+                    Text(AppStrings.howItWorks, style: AppTextStyles.heading2),
+                    UiUtils.addVerticalSpaceS(),
                     Text(
                       AppStrings.placeholderParagraph2,
-                      style: AppTextStyles.body,
+                      style: AppTextStyles.bodySmall,
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
               ),
-              UiUtils.addVerticalSpaceExtraLarge(),
+              UiUtils.addVerticalSpaceXXL(),
               Container(
                 alignment: Alignment.center,
                 child: Column(
                   children: [
                     Text(AppStrings.developer, style: AppTextStyles.heading1),
-                    UiUtils.addVerticalSpaceSmall(),
+                    UiUtils.addVerticalSpaceM(),
                     const CircleAvatar(
                       radius: AppDimens.dimen64,
                       backgroundColor: AppColors.primary,
@@ -106,37 +103,39 @@ class AboutScreen extends StatelessWidget {
                         size: AppDimens.dimen86,
                       ), // TODO fix color
                     ),
-                    UiUtils.addVerticalSpaceSmall(),
+                    UiUtils.addVerticalSpaceM(),
                     Text(
                       AppStrings.placeholderParagraph2,
-                      style: AppTextStyles.body,
+                      style: AppTextStyles.bodySmall,
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
               ),
-              UiUtils.addVerticalSpaceLarge(),
+
+              _addDividerWithVerticalSpace(),
+
               Container(
                 alignment: Alignment.center,
                 child: Column(
                   children: [
                     Text(
                       AppStrings.contactDetails,
-                      style: AppTextStyles.heading3,
+                      style: AppTextStyles.heading2,
                     ),
-                    UiUtils.addVerticalSpaceSmall(),
+                    UiUtils.addVerticalSpaceS(),
                     _buildContactTile(
                       title: AppStrings.email,
                       subtitle: AppStrings.devEmail,
                       leading: Icon(Icons.email),
                     ),
-                    UiUtils.addVerticalSpaceExtraSmall(),
+                    UiUtils.addVerticalSpaceXS(),
                     _buildContactTile(
                       title: AppStrings.mobileNo,
                       subtitle: AppStrings.devMobileNo,
                       leading: Icon(Icons.call),
                     ),
-                    UiUtils.addVerticalSpaceExtraSmall(),
+                    UiUtils.addVerticalSpaceXS(),
                     _buildContactTile(
                       title: AppStrings.github,
                       subtitle: AppStrings.devGithubUsername,
@@ -145,7 +144,7 @@ class AboutScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              UiUtils.addVerticalSpaceExtraLarge(),
+              UiUtils.addVerticalSpaceXL(),
               UiUtils.addCopyright(),
             ],
           ),
@@ -161,13 +160,23 @@ class AboutScreen extends StatelessWidget {
   }) {
     return ListTile(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppDimens.dimen8),
+        borderRadius: BorderRadius.circular(AppDimens.radiusM),
       ),
       tileColor: AppColors.surface,
       leading: leading,
       trailing: IconButton(onPressed: null, icon: Icon(Icons.open_in_new)),
       title: Text(title),
       subtitle: Text(subtitle),
+    );
+  }
+
+  Widget _addDividerWithVerticalSpace() {
+    return Column(
+      children: [
+        UiUtils.addVerticalSpaceL(),
+        UiUtils.addDivider(),
+        UiUtils.addVerticalSpaceL(),
+      ],
     );
   }
 }
