@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/theme/app_colors.dart';
+import 'package:pump/core/utils/ui_utils.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
-import 'package:pump/features/user/domain/message.dart';
+import 'package:pump/features/chat/domain/entities/message.dart';
 
 import '../../../../core/constants/app_dimens.dart';
-
-class _LocalColors {
-  static const primary = Color(0xFFEC7216);
-  static const background = Color(0xFF0E0E10);
-  static const incomingBubble = Color(0xFF1F1F23);
-  static const outgoingBubble = Color(0xFFEC7216);
-  static const textOnPrimary = Colors.white;
-  static const muted = Colors.white70;
-}
+import '../widgets/message_bubble.dart';
 
 class MessagesScreen extends StatefulWidget {
   final String titleName;
@@ -104,7 +97,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
         backgroundColor: AppColors.primary,
         title: Row(
           children: [
-            const SizedBox(width: 8),
+            UiUtils.addHorizontalSpaceS(),
             const CircleAvatar(
               radius: 18,
               backgroundImage: AssetImage("assets/images/jm.jpg"),
@@ -122,7 +115,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 ),
                 const SizedBox(height: 2),
                 const Text(
-                  'Online',
+                  AppStrings.active,
                   style: TextStyle(fontSize: 12, color: Colors.white70),
                 ),
               ],
@@ -130,7 +123,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
           ],
         ),
         actions: [
-          // IconButton(icon: const Icon(Icons.search), onPressed: () {}),
           IconButton(icon: const Icon(Icons.more_vert), onPressed: () {}),
         ],
       ),
@@ -172,85 +164,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
         ],
       ),
     );
-  }
-}
-
-class MessageBubble extends StatelessWidget {
-  final Message message;
-
-  const MessageBubble({super.key, required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    final isMe = message.isMe;
-    final radius = BorderRadius.only(
-      topLeft: const Radius.circular(12),
-      topRight: const Radius.circular(12),
-      bottomLeft: Radius.circular(isMe ? 12 : 0),
-      bottomRight: Radius.circular(isMe ? 0 : 12),
-    );
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        if (!isMe) const SizedBox(width: 8),
-        if (!isMe)
-          const CircleAvatar(
-            radius: 14,
-            backgroundImage: AssetImage("assets/images/jm.jpg"),
-          ),
-        if (!isMe) const SizedBox(width: 8),
-        Flexible(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-            decoration: BoxDecoration(
-              color: isMe
-                  ? _LocalColors.outgoingBubble
-                  : _LocalColors.incomingBubble,
-              borderRadius: radius,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  message.text,
-                  style: TextStyle(
-                    color: isMe ? _LocalColors.textOnPrimary : Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      _formatTime(message.time),
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    if (isMe) const SizedBox(width: 6),
-                    if (isMe)
-                      const Icon(Icons.check, size: 12, color: Colors.white70),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (isMe) const SizedBox(width: 8),
-      ],
-    );
-  }
-
-  static String _formatTime(DateTime time) {
-    final now = DateTime.now();
-    final diff = now.difference(time);
-    if (diff.inMinutes < 1) return 'now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m';
-    if (diff.inHours < 24) return '${diff.inHours}h';
-    return '${time.day}/${time.month}/${time.year}';
   }
 }
 
@@ -331,7 +244,7 @@ class _MessageInputState extends State<_MessageInput> {
                 },
               ),
             ),
-            const SizedBox(width: 8),
+            UiUtils.addHorizontalSpaceS(),
             InkWell(
               onTap: _canSend
                   ? () => widget.onSend(widget.controller.text)
@@ -340,7 +253,7 @@ class _MessageInputState extends State<_MessageInput> {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: _canSend ? _LocalColors.primary : Colors.white12,
+                  color: _canSend ? AppColors.primary : Colors.white12,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(

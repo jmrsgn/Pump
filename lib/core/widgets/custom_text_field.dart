@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final IconData? prefixIcon;
+  final bool isMultiline;
 
   const CustomTextField({
     super.key,
@@ -14,11 +15,13 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.prefixIcon,
+    this.isMultiline = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLines: isMultiline ? 5 : 1,
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,

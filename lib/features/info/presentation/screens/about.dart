@@ -5,8 +5,8 @@ import 'package:pump/core/utils/navigation_utils.dart';
 import 'package:pump/core/utils/ui_utils.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
 
-import '../../core/constants/app_dimens.dart';
-import '../../core/theme/app_colors.dart';
+import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/theme/app_colors.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -87,7 +87,7 @@ class AboutScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              UiUtils.addVerticalSpaceXXL(),
+              _addDividerWithVerticalSpace(),
               Container(
                 alignment: Alignment.center,
                 child: Column(
@@ -131,7 +131,7 @@ class AboutScreen extends StatelessWidget {
                     ),
                     UiUtils.addVerticalSpaceXS(),
                     _buildContactTile(
-                      title: AppStrings.mobileNo,
+                      title: AppStrings.phone,
                       subtitle: AppStrings.devMobileNo,
                       leading: Icon(Icons.call),
                     ),
@@ -173,9 +173,9 @@ class AboutScreen extends StatelessWidget {
   Widget _addDividerWithVerticalSpace() {
     return Column(
       children: [
-        UiUtils.addVerticalSpaceL(),
+        UiUtils.addVerticalSpaceXXL(),
         UiUtils.addDivider(),
-        UiUtils.addVerticalSpaceL(),
+        UiUtils.addVerticalSpaceXXL(),
       ],
     );
   }

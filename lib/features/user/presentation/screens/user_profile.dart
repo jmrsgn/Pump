@@ -37,14 +37,14 @@ class UserProfileScreen extends StatelessWidget {
                   UiUtils.addVerticalSpaceS(),
 
                   CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/sample.jpg"),
+                    backgroundImage: AssetImage("assets/images/jm.jpg"),
                     radius: AppDimens.dimen64,
                   ),
 
                   UiUtils.addVerticalSpaceM(),
 
-                  Text("Name ng Client o Coach", style: AppTextStyles.heading1),
-                  Text("sample@gmail.com", style: AppTextStyles.body),
+                  Text("John Martin Marasigan", style: AppTextStyles.heading1),
+                  Text("marasiganjohnmartin@gmail.com", style: AppTextStyles.bodySmall),
 
                   UiUtils.addVerticalSpaceS(),
 

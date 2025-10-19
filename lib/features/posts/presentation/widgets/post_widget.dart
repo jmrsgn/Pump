@@ -11,6 +11,7 @@ class PostWidget extends StatelessWidget {
   final String authorImageUrl;
   final String datePosted;
   final String? postImageUrl;
+  final bool isLiked;
 
   const PostWidget({
     super.key,
@@ -19,6 +20,7 @@ class PostWidget extends StatelessWidget {
     required this.authorImageUrl,
     required this.datePosted,
     this.postImageUrl,
+    this.isLiked = false,
   });
 
   @override
@@ -52,7 +54,7 @@ class PostWidget extends StatelessWidget {
                       children: [
                         Text(
                           author,
-                          style: AppTextStyles.heading3,
+                          style: AppTextStyles.bodyLarge,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Row(
@@ -74,7 +76,7 @@ class PostWidget extends StatelessWidget {
                   ),
 
                   // Date pinned to the right
-                  Text(datePosted, style: AppTextStyles.bodySmall),
+                  Text(datePosted, style: AppTextStyles.caption),
                 ],
               ),
             ),
@@ -115,16 +117,32 @@ class PostWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.favorite_border, color: AppColors.textPrimary),
+                    if (isLiked)
+                      Icon(
+                        Icons.favorite_outlined,
+                        color: AppColors.textOnPrimary,
+                      )
+                    else
+                      Icon(
+                        Icons.favorite_border,
+                        color: AppColors.textOnPrimary,
+                      ),
                     UiUtils.addHorizontalSpaceXS(),
-                    Text(AppStrings.like, style: AppTextStyles.caption),
+                    Text(
+                      AppStrings.like,
+                      style: isLiked
+                          ? AppTextStyles.caption.copyWith(
+                              fontWeight: FontWeight.bold,
+                            )
+                          : AppTextStyles.caption,
+                    ),
                   ],
                 ),
                 Row(
                   children: [
                     Icon(
                       Icons.mode_comment_outlined,
-                      color: AppColors.textPrimary,
+                      color: AppColors.textOnPrimary,
                     ),
                     UiUtils.addHorizontalSpaceXS(),
                     Text(AppStrings.comment, style: AppTextStyles.caption),
@@ -132,7 +150,7 @@ class PostWidget extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(Icons.share, color: AppColors.textPrimary),
+                    Icon(Icons.share, color: AppColors.textOnPrimary),
                     UiUtils.addHorizontalSpaceXS(),
                     Text(AppStrings.share, style: AppTextStyles.caption),
                   ],

@@ -12,6 +12,10 @@ class AppDimens {
   static const double dimen64 = 64.0;
   static const double dimen86 = 86.0;
 
+  // Paddings
+  static const double padding10 = 10.0;
+  static const double padding14 = 14.0;
+
   // TODO: fix comments provided by chatGpt
   // ───────────────────────────────
   // 📏 SPACING SCALE (Margins & Padding)
@@ -99,6 +103,8 @@ class AppDimens {
   static const double radiusM = 8.0;
   static const double radiusL = 16.0;
   static const double radiusXL = 24.0;
+  static const double radiusXXL = 32.0;
+  static const double radiusXXXL = 48.0;
 
   static const double elevationLow = 2.0;
   static const double elevationMedium = 4.0;

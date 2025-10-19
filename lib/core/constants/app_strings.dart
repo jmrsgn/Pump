@@ -1,22 +1,21 @@
 class AppStrings {
   // Common
   static const appName = 'Pump';
-  static const login = 'Login';
   static const register = 'Register';
   static const username = 'Username';
   static const password = 'Password';
   static const allYouNeedInOneApp = "All you need, in one app";
   static const routeNotFound = "Route not found";
-  static const profile = "Profile";
-  static const messages = "Messages";
-  static const favorites = "Favorites";
-  static const contact = "Contact";
-  static const feedback = "Feedback";
-  static const about = "About";
   static const signOut = "Sign out";
   static const goBack = "Go back";
+  static const name = "Name";
+  static const email = "Email";
+  static const phone = "Phone";
+  static const message = "Message";
+  static const submit = "Submit";
 
   // Login Page
+  static const login = 'Login';
   static const dontHaveAnAccount = "Don't have an account?";
   static const registerHere = "Register here";
 
@@ -26,16 +25,16 @@ class AppStrings {
   static const share = "Share";
 
   // About Page
+  static const about = "About";
   static const aboutPage = "About page";
   static const inspiration = "Inspiration";
   static const howItWorks = "How it works";
   static const developer = "Developer";
   static const contactDetails = "Contact Details";
-  static const email = "Email";
-  static const mobileNo = "Mobile No.";
   static const github = "GitHub";
 
   // Profile Page
+  static const profile = "Profile";
   static const editProfile = "Edit Profile";
   static const paymentMethod = "Payment Method";
   static const clients = "Clients";
@@ -43,6 +42,22 @@ class AppStrings {
   static const help = "Help";
   static const active = "Active";
   static const inactive = "Inactive";
+
+  // Feedback Page
+  static const feedback = "Feedback";
+  static const letMeKnowWhatToImprove = "Let me know what to improve :>";
+
+  // Favorites Page
+  static const favorites = "Favorites";
+
+  // Contact Page
+  static const contact = "Contact";
+  static const letsTalk = "Let's talk";
+  static const isThereAnytingICanHelpYouWith =
+      "Is there anything I can help you with?";
+
+  // Messages Page
+  static const messages = "Messages";
 
   // Licenses and Copyright
   static const String license = "";

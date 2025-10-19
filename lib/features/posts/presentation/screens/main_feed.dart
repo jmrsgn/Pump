@@ -39,7 +39,7 @@ class _MainFeedScreenState extends State<MainFeedScreen> {
         itemBuilder: (context, index) {
           return PostWidget(
             description: AppStrings.placeholderParagraph2,
-            author: 'John Martin',
+            author: 'John Martin Marasigan',
             authorImageUrl: 'assets/images/jm.jpg',
             datePosted: '10/08/25',
           );

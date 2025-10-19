@@ -17,8 +17,8 @@ class AppDrawer extends StatelessWidget {
     super.key,
     required this.selectedRoute,
     required this.onSignOut,
-    this.userName = "User1",
-    this.email = "sample@gmail.com",
+    this.userName = "John Martin Marasigan",
+    this.email = "marasiganjohnmartin@gmail.com",
   });
 
   @override
@@ -35,13 +35,12 @@ class AppDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.person,
-                  size: AppDimens.drawerIconAvatarSize,
-                  color: AppColors.textOnPrimary,
+                CircleAvatar(
+                  backgroundImage: AssetImage("assets/images/jm.jpg"),
+                  radius: AppDimens.radiusXXXL,
                 ),
 
-                UiUtils.addHorizontalSpaceXXL(),
+                UiUtils.addHorizontalSpaceL(),
 
                 Expanded(
                   child: Container(
@@ -50,7 +49,7 @@ class AppDrawer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(userName, style: AppTextStyles.heading1),
+                        Text(userName, style: AppTextStyles.heading2),
                         Text(email, style: AppTextStyles.bodySmall),
                       ],
                     ),
