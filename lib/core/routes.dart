@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pump/core/screens/invalid_route.dart';
-import 'package:pump/features/auth/presentation/login/login.dart';
+import 'package:pump/features/auth/presentation/screens/login.dart';
+import 'package:pump/features/auth/presentation/screens/register.dart';
 import 'package:pump/features/chat/presentation/screens/messages.dart';
 import 'package:pump/features/info/presentation/screens/contact.dart';
 import 'package:pump/features/info/presentation/screens/feedback.dart';
@@ -24,6 +25,8 @@ class AppRoutes {
     switch (settings.name) {
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case register:
+        return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case mainFeed:
         return MaterialPageRoute(builder: (_) => const MainFeedScreen());
       case about:

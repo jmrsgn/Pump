@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/theme/app_button_styles.dart';
@@ -8,6 +9,7 @@ import 'package:pump/core/widgets/custom_scaffold.dart';
 import 'package:pump/core/widgets/custom_text_field.dart';
 import 'package:pump/core/constants/app_dimens.dart';
 import 'package:pump/core/theme/app_colors.dart';
+import 'package:pump/features/auth/presentation/viewmodels/auth_viewmodel.dart';
 
 import '../../../../core/theme/app_text_styles.dart';
 
@@ -23,22 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  void login() async {
-    // setState(() {
-    //   _isLoading = true;
-    // });
-    //
-    // await Future.delayed(const Duration(seconds: 2));
-    //
-    // setState(() {
-    //   _isLoading = false;
-    // });
-
-    Navigator.pushReplacementNamed(context, AppRoutes.mainFeed);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final vm = context.watch<AuthViewModel>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: CustomScaffold(
@@ -110,16 +100,40 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: AppDimens.buttonSmallWidth,
                         child: ElevatedButton(
                           style: AppButtonStyles.normal,
-                          onPressed: () {
-                            final username = _usernameController.text.trim();
-                            final password = _passwordController.text.trim();
+                          onPressed: vm.isLoading
+                              ? null
+                              : () async {
+                                  final username = _usernameController.text
+                                      .trim();
+                                  final password = _passwordController.text
+                                      .trim();
 
-                            login();
+                                  if (username.isEmpty || password.isEmpty) {
+                                    SnackBar(
+                                      content: Text("Invalid Credentials"),
+                                    );
+                                    return;
+                                  }
 
-                            if (username.isNotEmpty && password.isNotEmpty) {
-                              // TODO proceed with Auth process then go to feed
-                            }
-                          },
+                                  await vm.login(username, password);
+
+                                  if (vm.errorMessage == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text("Successfully logged in"),
+                                      ),
+                                    );
+                                    Navigator.pushReplacementNamed(
+                                      context,
+                                      AppRoutes.mainFeed,
+                                    );
+                                  } else {
+                                    // Optionally show error
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(vm.errorMessage!)),
+                                    );
+                                  }
+                                },
                           child: const Text(AppStrings.login),
                         ),
                       ),
