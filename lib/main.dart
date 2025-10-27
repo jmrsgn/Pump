@@ -6,7 +6,7 @@ import 'package:pump/core/theme/app_theme.dart';
 import 'package:pump/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:pump/features/auth/data/services/auth_service.dart';
 import 'package:pump/features/auth/domain/usecases/login_usecase.dart';
-import 'package:pump/features/auth/presentation/viewmodels/auth_viewmodel.dart';
+import 'package:pump/features/auth/presentation/viewmodels/login_viewmodel.dart';
 
 void main() {
   runApp(

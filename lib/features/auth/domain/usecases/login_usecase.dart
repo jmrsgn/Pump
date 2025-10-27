@@ -1,3 +1,6 @@
+import 'package:pump/features/auth/data/models/auth_response_dto.dart';
+
+import '../../data/models/login_request_dto.dart';
 import '../repositories/auth_repository.dart';
 
 class LoginUseCase {
@@ -5,9 +8,8 @@ class LoginUseCase {
 
   LoginUseCase(this.repository);
 
-  /// Executes login with username and password
-  /// Returns JWT token if successful
-  Future<String?> execute(String username, String password) async {
-    return await repository.login(username, password);
+  Future<AuthResponse?> execute(String username, String password) async {
+    final request = LoginRequest(username: username, password: password);
+    return await repository.login(request);
   }
 }

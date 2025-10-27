@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/theme/app_colors.dart';
 import 'package:pump/core/theme/app_text_styles.dart';
@@ -79,4 +80,49 @@ class UiUtils {
   static Widget addHorizontalSpaceXXL() {
     return SizedBox(width: AppDimens.spaceXXL);
   }
+
+  // Snackbar
+  static void showSnackbar(
+    BuildContext context, {
+    required String message,
+    Color? backgroundColor,
+    Duration duration = const Duration(seconds: 3),
+    SnackBarAction? action,
+  }) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, style: AppTextStyles.bodySmall),
+        backgroundColor: backgroundColor ?? AppColors.surface,
+        duration: duration,
+        action: action,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDimens.radiusS),
+        ),
+      ),
+    );
+  }
+
+  static void showSnackbarSuccess(
+    BuildContext context, {
+    required String message,
+  }) => showSnackbar(
+    context,
+    message: message,
+    backgroundColor: AppColors.success,
+  );
+
+  static void showSnackbarError(
+    BuildContext context, {
+    required String message,
+  }) =>
+  // TODO: FIX COLOR
+      showSnackbar(context, message: message, backgroundColor: AppColors.info);
+
+  static void showSnackbarInfo(
+    BuildContext context, {
+    required String message,
+  }) =>
+      showSnackbar(context, message: message, backgroundColor: AppColors.info);
 }

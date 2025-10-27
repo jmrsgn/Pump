@@ -1,24 +1,41 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:pump/core/constants/api_status.dart';
+import 'package:pump/core/constants/app_strings.dart';
 
 import '../../../../core/constants/api_constants.dart';
+import '../models/auth_response_dto.dart';
+import '../models/login_request_dto.dart';
 
 class AuthService {
-  Future<String?> login(String username, String password) async {
-    final url = Uri.parse('${ApiConstants.baseUrl}/auth/login');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'username': username, 'password': password}),
-    );
+  Future<AuthResponse?> login(LoginRequest request) async {
+    try {
+      final response = await http.post(
+        Uri.parse(ApiConstants.loginUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(request.toJson()),
+      );
 
-    if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
-      print('Login successful: ${response.body}');
-      return body['token']; // return JWT
-    } else {
-      print('Login failed: ${response.body}');
-      return null;
+      final json = jsonDecode(response.body);
+
+      print("JSON BODY");
+      print(json);
+
+      if (response.statusCode == ApiStatus.SUCCESS) {
+        return AuthResponse.fromJson(json);
+      } else {
+        return AuthResponse(
+          token: null,
+          userResponse: null,
+          authMessage: json['authMessage'] ?? AppStrings.anUnexpectedErrorOccurred,
+        );
+      }
+    } catch (e) {
+      return AuthResponse(
+        token: null,
+        userResponse: null,
+        authMessage: '${AppStrings.anUnexpectedErrorOccurred}: $e',
+      );
     }
   }
 }

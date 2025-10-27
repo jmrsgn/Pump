@@ -4,12 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/theme/app_button_styles.dart';
+import 'package:pump/core/utils/navigation_utils.dart';
 import 'package:pump/core/utils/ui_utils.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
 import 'package:pump/core/widgets/custom_text_field.dart';
 import 'package:pump/core/constants/app_dimens.dart';
 import 'package:pump/core/theme/app_colors.dart';
-import 'package:pump/features/auth/presentation/viewmodels/auth_viewmodel.dart';
+import 'package:pump/features/auth/presentation/viewmodels/login_viewmodel.dart';
 
 import '../../../../core/theme/app_text_styles.dart';
 
@@ -21,7 +22,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isLoading = false;
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: CustomScaffold(
-        isLoading: _isLoading,
+        isLoading: vm.isLoading,
         body: Stack(
           fit: StackFit.expand,
           alignment: Alignment.center,
@@ -108,29 +108,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                   final password = _passwordController.text
                                       .trim();
 
-                                  if (username.isEmpty || password.isEmpty) {
-                                    SnackBar(
-                                      content: Text("Invalid Credentials"),
-                                    );
-                                    return;
-                                  }
-
                                   await vm.login(username, password);
 
-                                  if (vm.errorMessage == null) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text("Successfully logged in"),
-                                      ),
+                                  // Prevents context misuse
+                                  if (!context.mounted) return;
+
+                                  if (vm.message == null) {
+                                    UiUtils.showSnackbarSuccess(
+                                      context,
+                                      message: AppStrings.successfullyLoggedIn,
                                     );
-                                    Navigator.pushReplacementNamed(
+                                    NavigationUtils.replaceWith(
                                       context,
                                       AppRoutes.mainFeed,
                                     );
                                   } else {
-                                    // Optionally show error
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(vm.errorMessage!)),
+                                    UiUtils.showSnackbarError(
+                                      context,
+                                      message: vm.message.toString(),
                                     );
                                   }
                                 },
@@ -161,7 +156,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            // TODO: Navigate to registration screen
+                            NavigationUtils.navigateTo(
+                              context,
+                              AppRoutes.register,
+                            );
                           },
                       ),
                     ],

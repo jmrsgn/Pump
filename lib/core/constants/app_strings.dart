@@ -13,11 +13,15 @@ class AppStrings {
   static const phone = "Phone";
   static const message = "Message";
   static const submit = "Submit";
+  static const anUnexpectedErrorOccurred = "An unexpected error occurred";
 
   // Login Page
   static const login = 'Login';
   static const dontHaveAnAccount = "Don't have an account?";
   static const registerHere = "Register here";
+  static const invalidCredentials = "Invalid credentials";
+  static const successfullyLoggedIn = "Successfully logged in";
+  static const usernameAndPasswordAreRequired = "Username and password are required";
 
   // Main Feed Page
   static const like = "Like";
