@@ -1,16 +1,13 @@
 class AppStrings {
   // Common
   static const appName = 'Pump';
-  static const register = 'Register';
-  static const username = 'Username';
+  static const username = "Username";
   static const password = 'Password';
   static const allYouNeedInOneApp = "All you need, in one app";
   static const routeNotFound = "Route not found";
   static const signOut = "Sign out";
   static const goBack = "Go back";
   static const name = "Name";
-  static const email = "Email";
-  static const phone = "Phone";
   static const message = "Message";
   static const submit = "Submit";
   static const anUnexpectedErrorOccurred = "An unexpected error occurred";
@@ -21,7 +18,19 @@ class AppStrings {
   static const registerHere = "Register here";
   static const invalidCredentials = "Invalid credentials";
   static const successfullyLoggedIn = "Successfully logged in";
-  static const usernameAndPasswordAreRequired = "Username and password are required";
+  static const usernameAndPasswordAreRequired =
+      "Username and password are required";
+
+  // Register Page
+  static const register = 'Register';
+  static const userRegistration = "User Registration";
+  static const firstName = "First Name";
+  static const lastName = "Last Name";
+  static const email = "Email";
+  static const phone = "Phone";
+  static const role = "Role";
+  static const client = "Client";
+  static const iAmSigningUpAsA = "I am signing up as a";
 
   // Main Feed Page
   static const like = "Like";
