@@ -1,18 +1,25 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TokenStorage {
-  static const _storage = FlutterSecureStorage();
+  // Singleton instance
+  static final TokenStorage _instance = TokenStorage._internal();
+  factory TokenStorage() => _instance;
+  TokenStorage._internal();
   static const _key = 'jwt_token';
 
-  static Future<void> saveToken(String token) async {
+  final FlutterSecureStorage _storage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+  );
+
+  Future<void> saveToken(String token) async {
     await _storage.write(key: _key, value: token);
   }
 
-  static Future<String?> getToken() async {
+  Future<String?> getToken() async {
     return await _storage.read(key: _key);
   }
 
-  static Future<void> deleteToken() async {
+  Future<void> deleteToken() async {
     await _storage.delete(key: _key);
   }
 }

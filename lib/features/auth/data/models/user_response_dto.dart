@@ -4,7 +4,7 @@ class UserResponse {
   final String? username;
   final String? email;
   final String? phone;
-  final String? role;
+  final int? role;
   final String? profileImageUrl;
 
   UserResponse({

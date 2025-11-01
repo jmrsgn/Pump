@@ -104,25 +104,30 @@ class UiUtils {
     );
   }
 
-  static void showSnackbarSuccess(
+  static void showSnackBarSuccess(
     BuildContext context, {
     required String message,
   }) => showSnackbar(
     context,
     message: message,
-    backgroundColor: AppColors.success,
+    backgroundColor: AppColors.snackBarSuccess,
   );
 
-  static void showSnackbarError(
+  static void showSnackBarError(
     BuildContext context, {
     required String message,
-  }) =>
-  // TODO: FIX COLOR
-      showSnackbar(context, message: message, backgroundColor: AppColors.info);
+  }) => showSnackbar(
+    context,
+    message: message,
+    backgroundColor: AppColors.snackBarError,
+  );
 
-  static void showSnackbarInfo(
+  static void showSnackBarInfo(
     BuildContext context, {
     required String message,
-  }) =>
-      showSnackbar(context, message: message, backgroundColor: AppColors.info);
+  }) => showSnackbar(
+    context,
+    message: message,
+    backgroundColor: AppColors.snackBarInfo,
+  );
 }

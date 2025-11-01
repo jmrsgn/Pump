@@ -6,35 +6,65 @@ import 'package:pump/core/constants/app_strings.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../models/auth_response_dto.dart';
 import '../models/login_request_dto.dart';
+import '../models/register_request_dto.dart';
 
 class AuthService {
   Future<AuthResponse?> login(LoginRequest request) async {
     try {
       final response = await http.post(
         Uri.parse(ApiConstants.loginUrl),
-        headers: {'Content-Type': 'application/json'},
+        headers: ApiConstants.headerType,
         body: jsonEncode(request.toJson()),
       );
 
       final json = jsonDecode(response.body);
 
-      print("JSON BODY");
-      print(json);
-
-      if (response.statusCode == ApiStatus.SUCCESS) {
+      if (response.statusCode == ApiStatus.success ||
+          response.statusCode == ApiStatus.created) {
         return AuthResponse.fromJson(json);
       } else {
         return AuthResponse(
           token: null,
           userResponse: null,
-          authMessage: json['authMessage'] ?? AppStrings.anUnexpectedErrorOccurred,
+          errorMessage:
+              json['errorMessage'] ?? AppStrings.anUnexpectedErrorOccurred,
         );
       }
     } catch (e) {
       return AuthResponse(
         token: null,
         userResponse: null,
-        authMessage: '${AppStrings.anUnexpectedErrorOccurred}: $e',
+        errorMessage: '${AppStrings.anUnexpectedErrorOccurred}: $e',
+      );
+    }
+  }
+
+  Future<AuthResponse> register(RegisterRequest request) async {
+    try {
+      final response = await http.post(
+        Uri.parse(ApiConstants.registerUrl),
+        headers: ApiConstants.headerType,
+        body: jsonEncode(request.toJson()),
+      );
+
+      final json = jsonDecode(response.body);
+
+      if (response.statusCode == ApiStatus.success ||
+          response.statusCode == ApiStatus.created) {
+        return AuthResponse.fromJson(json);
+      } else {
+        return AuthResponse(
+          token: null,
+          userResponse: null,
+          errorMessage:
+              json['errorMessage'] ?? AppStrings.anUnexpectedErrorOccurred,
+        );
+      }
+    } catch (e) {
+      return AuthResponse(
+        token: null,
+        userResponse: null,
+        errorMessage: '${AppStrings.anUnexpectedErrorOccurred}: $e',
       );
     }
   }

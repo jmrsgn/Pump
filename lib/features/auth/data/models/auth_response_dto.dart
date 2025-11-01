@@ -3,15 +3,17 @@ import 'package:pump/features/auth/data/models/user_response_dto.dart';
 class AuthResponse {
   String? token;
   UserResponse? userResponse;
-  String? authMessage;
+  String? errorMessage;
 
-  AuthResponse({this.token, this.userResponse, this.authMessage});
+  AuthResponse({this.token, this.userResponse, this.errorMessage});
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    final userData = json['userResponse'];
+
     return AuthResponse(
       token: json['token'],
-      userResponse: UserResponse.fromJson(json['userResponse']),
-      authMessage: json['authMessage'],
+      userResponse: userData == null ? null : UserResponse.fromJson(userData),
+      errorMessage: json['errorMessage'],
     );
   }
 }

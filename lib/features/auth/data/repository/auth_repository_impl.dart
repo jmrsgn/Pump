@@ -1,34 +1,41 @@
+import 'package:pump/core/utils/token_storage.dart';
 import 'package:pump/features/auth/data/models/login_request_dto.dart';
+import 'package:pump/features/auth/data/models/register_request_dto.dart';
 
 import '../../domain/repositories/auth_repository.dart';
 import '../models/auth_response_dto.dart';
 import '../services/auth_service.dart';
-import 'package:pump/core/utils/token_storage.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthService authService;
+  final AuthService _authService;
+  final TokenStorage _storage = TokenStorage();
 
-  AuthRepositoryImpl(this.authService);
+  AuthRepositoryImpl(this._authService);
 
   @override
   Future<AuthResponse?> login(LoginRequest request) async {
-    final AuthResponse? authResponse = await authService.login(request);
+    final AuthResponse? authResponse = await _authService.login(request);
 
     // Makes sure token is present
     if (authResponse != null && authResponse.token != null) {
-      await TokenStorage.saveToken(authResponse.token!);
+      await _storage.saveToken(authResponse.token!);
     }
 
     return authResponse;
   }
 
   @override
+  Future<AuthResponse?> register(RegisterRequest request) {
+    return _authService.register(request);
+  }
+
+  @override
   Future<String?> getSavedToken() async {
-    return TokenStorage.getToken();
+    return _storage.getToken();
   }
 
   @override
   Future<void> logout() async {
-    await TokenStorage.deleteToken();
+    await _storage.deleteToken();
   }
 }

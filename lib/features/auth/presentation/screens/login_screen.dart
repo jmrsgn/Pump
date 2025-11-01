@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/theme/app_button_styles.dart';
@@ -10,49 +10,61 @@ import 'package:pump/core/widgets/custom_scaffold.dart';
 import 'package:pump/core/widgets/custom_text_field.dart';
 import 'package:pump/core/constants/app_dimens.dart';
 import 'package:pump/core/theme/app_colors.dart';
-import 'package:pump/features/auth/presentation/viewmodels/login_viewmodel.dart';
+import 'package:pump/features/auth/presentation/providers/auth_state.dart';
 
 import '../../../../core/theme/app_text_styles.dart';
+import '../providers/auth_providers.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _usernameController = TextEditingController();
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.watch<AuthViewModel>();
+    // Listen for changes in authState to react after login completes
+    ref.listen<AuthState>(authViewModelProvider, (previous, next) {
+      if (previous?.isLoading == true && next.isLoading == false) {
+        if (next.errorMessage == null) {
+          if (!mounted) return;
+          UiUtils.showSnackBarSuccess(
+            context,
+            message: AppStrings.successfullyLoggedIn,
+          );
+          NavigationUtils.replaceWith(context, AppRoutes.mainFeed);
+        } else {
+          if (!mounted) return;
+          UiUtils.showSnackBarError(context, message: next.errorMessage!);
+        }
+      }
+    });
+
+    final authState = ref.watch(authViewModelProvider);
+    final authViewModel = ref.watch(authViewModelProvider.notifier);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: CustomScaffold(
-        isLoading: vm.isLoading,
+        isLoading: authState.isLoading,
         body: Stack(
           fit: StackFit.expand,
           alignment: Alignment.center,
           children: [
-            // Background image
             Image.asset('assets/images/home.png', fit: BoxFit.cover),
-
-            // Dark overlay
             Container(color: AppColors.overlay),
-
-            // Main content
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(AppDimens.spaceL),
                 child: Column(
-                  mainAxisSize: MainAxisSize
-                      .min, // Takes only as much as available height needed
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Top left section
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -66,68 +78,38 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-
                     UiUtils.addVerticalSpaceXXL(),
-
-                    // Middle section
                     Center(
                       child: Column(
                         children: [
                           CustomTextField(
-                            hint: AppStrings.username,
-                            controller: _usernameController,
-                            prefixIcon: Icons.person,
+                            hint: AppStrings.email,
+                            controller: _emailController,
                           ),
-
                           UiUtils.addVerticalSpaceM(),
-
                           CustomTextField(
                             hint: AppStrings.password,
                             controller: _passwordController,
-                            prefixIcon: Icons.lock,
                             obscureText: true,
                           ),
                         ],
                       ),
                     ),
-
                     UiUtils.addVerticalSpaceM(),
-
-                    // Lower right section
                     Align(
                       alignment: AlignmentGeometry.bottomRight,
                       child: SizedBox(
                         width: AppDimens.buttonSmallWidth,
                         child: ElevatedButton(
                           style: AppButtonStyles.normal,
-                          onPressed: vm.isLoading
+                          onPressed: authState.isLoading
                               ? null
-                              : () async {
-                                  final username = _usernameController.text
-                                      .trim();
+                              : () {
+                                  final username = _emailController.text.trim();
                                   final password = _passwordController.text
                                       .trim();
-
-                                  await vm.login(username, password);
-
-                                  // Prevents context misuse
-                                  if (!context.mounted) return;
-
-                                  if (vm.message == null) {
-                                    UiUtils.showSnackbarSuccess(
-                                      context,
-                                      message: AppStrings.successfullyLoggedIn,
-                                    );
-                                    NavigationUtils.replaceWith(
-                                      context,
-                                      AppRoutes.mainFeed,
-                                    );
-                                  } else {
-                                    UiUtils.showSnackbarError(
-                                      context,
-                                      message: vm.message.toString(),
-                                    );
-                                  }
+                                  authViewModel.login(username, password);
+                                  // No need to check authState here — ref.listen handles it
                                 },
                           child: const Text(AppStrings.login),
                         ),
@@ -137,8 +119,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-
-            // Bottom text
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -175,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }

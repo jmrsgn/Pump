@@ -1,7 +1,9 @@
 class AppStrings {
+  AppStrings._();
+
   // Common
   static const appName = 'Pump';
-  static const username = "Username";
+  static const email = "Email";
   static const password = 'Password';
   static const allYouNeedInOneApp = "All you need, in one app";
   static const routeNotFound = "Route not found";
@@ -26,11 +28,13 @@ class AppStrings {
   static const userRegistration = "User Registration";
   static const firstName = "First Name";
   static const lastName = "Last Name";
-  static const email = "Email";
   static const phone = "Phone";
   static const role = "Role";
   static const client = "Client";
   static const iAmSigningUpAsA = "I am signing up as a";
+  static const allFieldsAreRequired = "All fields are required";
+  static const userRegisteredSuccessfully = "User registered successfully";
+  static const phPhonePrefix = "+63";
 
   // Main Feed Page
   static const like = "Like";
