@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump/core/providers/ui_state.dart';
 import 'package:pump/features/auth/domain/usecases/logout_usecase.dart';
 import '../../data/repository/auth_repository_impl.dart';
 import '../../data/services/auth_service.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../viewmodels/auth_viewmodel.dart';
-import 'auth_state.dart';
 
 // AuthService provider
 final authServiceProvider = Provider<AuthService>((ref) => AuthService());
@@ -16,7 +16,7 @@ final authRepositoryProvider = Provider<AuthRepositoryImpl>(
 );
 
 // AuthViewModel provider
-final authViewModelProvider = StateNotifierProvider<AuthViewModel, AuthState>((
+final authViewModelProvider = StateNotifierProvider<AuthViewModel, UiState>((
   ref,
 ) {
   final repository = ref.watch(authRepositoryProvider);

@@ -4,9 +4,9 @@ import 'package:pump/core/constants/api_status.dart';
 import 'package:pump/core/constants/app_strings.dart';
 
 import '../../../../core/constants/api_constants.dart';
-import '../models/auth_response_dto.dart';
-import '../models/login_request_dto.dart';
-import '../models/register_request_dto.dart';
+import '../dto/auth_response_dto.dart';
+import '../dto/login_request_dto.dart';
+import '../dto/register_request_dto.dart';
 
 class AuthService {
   Future<AuthResponse?> login(LoginRequest request) async {

@@ -7,6 +7,8 @@ import 'package:pump/core/theme/app_text_styles.dart';
 import '../constants/app_dimens.dart';
 
 class UiUtils {
+  UiUtils._();
+
   static Widget addDivider() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppDimens.dimen4),

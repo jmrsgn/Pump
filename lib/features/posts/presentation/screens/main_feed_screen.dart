@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump/core/constants/app_strings.dart';
+import 'package:pump/core/providers/user_state.dart';
 import 'package:pump/core/routes.dart';
+import 'package:pump/core/utils/navigation_utils.dart';
 import 'package:pump/core/widgets/app_drawer.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
+import 'package:pump/features/auth/domain/entities/user.dart';
 import 'package:pump/features/posts/presentation/widgets/post_widget.dart';
 import '../../../../core/theme/app_colors.dart';
 
-class MainFeedScreen extends StatefulWidget {
+class MainFeedScreen extends ConsumerStatefulWidget {
   const MainFeedScreen({super.key});
 
-  State<StatefulWidget> createState() => _MainFeedScreenState();
+  @override
+  ConsumerState<MainFeedScreen> createState() => _MainFeedScreenState();
 }
 
-class _MainFeedScreenState extends State<MainFeedScreen> {
-  bool _isLoading = false;
-
+class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
   void signOut() async {
     Navigator.pushReplacementNamed(context, AppRoutes.login);
   }
 
   @override
   Widget build(BuildContext context) {
+    // final postState = ref.watch(authViewModelProvider);
+    // final authViewModel = ref.watch(authViewModelProvider.notifier);
+    final user = User(
+      firstName: "John Martin",
+      lastName: "Marasigan",
+      email: "marasiganjohnmartin@gmail.com",
+      phone: "+639561723007",
+      role: 1,
+      profileImageUrl: null,
+    );
+
     return CustomScaffold(
-      isLoading: _isLoading,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         leading: Builder(
@@ -31,9 +44,16 @@ class _MainFeedScreenState extends State<MainFeedScreen> {
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
+        actions: [
+          IconButton(icon: const Icon(Icons.message), onPressed: () {}),
+        ],
       ),
       backgroundColor: AppColors.background,
-      drawer: AppDrawer(onSignOut: signOut, selectedRoute: ''),
+      drawer: AppDrawer(
+        currentUser: user,
+        onSignOut: signOut,
+        selectedRoute: '',
+      ),
       body: ListView.builder(
         itemCount: 3,
         itemBuilder: (context, index) {
@@ -46,7 +66,9 @@ class _MainFeedScreenState extends State<MainFeedScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          NavigationUtils.navigateTo(context, AppRoutes.createPost);
+        },
         backgroundColor: AppColors.primary,
         child: const Icon(Icons.add),
       ),

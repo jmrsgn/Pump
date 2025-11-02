@@ -1,9 +1,12 @@
 import 'package:pump/core/utils/token_storage.dart';
-import 'package:pump/features/auth/data/models/login_request_dto.dart';
-import 'package:pump/features/auth/data/models/register_request_dto.dart';
+import 'package:pump/features/auth/domain/entities/user.dart';
 
+import '../../../../core/dao/user_dao.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../models/auth_response_dto.dart';
+import '../dto/auth_response_dto.dart';
+import '../dto/login_request_dto.dart';
+import '../dto/register_request_dto.dart';
+import '../dto/user_response_dto.dart';
 import '../services/auth_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -20,6 +23,16 @@ class AuthRepositoryImpl implements AuthRepository {
     if (authResponse != null && authResponse.token != null) {
       await _storage.saveToken(authResponse.token!);
     }
+
+    // final UserResponse userResponse = authResponse!.userResponse!;
+    // final user = User(
+    //   firstName: userResponse.firstName == null ? "" : userResponse.firstName!,
+    //   lastName: userResponse.lastName!,
+    //   email: userResponse.email!,
+    //   phone: userResponse.phone!,
+    //   role: userResponse.role!,
+    // );
+    // await _userDao.insertUser(user.toEntity());
 
     return authResponse;
   }

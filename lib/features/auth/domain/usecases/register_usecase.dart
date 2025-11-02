@@ -1,7 +1,7 @@
 import 'package:pump/core/constants/app_strings.dart';
-import 'package:pump/features/auth/data/models/auth_response_dto.dart';
 
-import '../../data/models/register_request_dto.dart';
+import '../../data/dto/auth_response_dto.dart';
+import '../../data/dto/register_request_dto.dart';
 import '../repositories/auth_repository.dart';
 
 class RegisterUseCase {

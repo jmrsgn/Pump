@@ -1,4 +1,4 @@
-import 'package:pump/features/auth/data/models/user_response_dto.dart';
+import 'package:pump/features/auth/data/dto/user_response_dto.dart';
 
 class AuthResponse {
   String? token;

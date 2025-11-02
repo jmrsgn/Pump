@@ -1,6 +1,5 @@
-import 'package:pump/features/auth/data/models/auth_response_dto.dart';
-
-import '../../data/models/login_request_dto.dart';
+import '../../data/dto/auth_response_dto.dart';
+import '../../data/dto/login_request_dto.dart';
 import '../repositories/auth_repository.dart';
 
 class LoginUseCase {
@@ -8,8 +7,8 @@ class LoginUseCase {
 
   LoginUseCase(this._repository);
 
-  Future<AuthResponse?> execute(String username, String password) async {
-    final request = LoginRequest(email: username, password: password);
+  Future<AuthResponse?> execute(String email, String password) async {
+    final request = LoginRequest(email: email, password: password);
     return await _repository.login(request);
   }
 }

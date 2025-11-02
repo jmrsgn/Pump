@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump/core/constants/app_dimens.dart';
 import 'package:pump/core/constants/app_strings.dart';
+import 'package:pump/core/providers/ui_state.dart';
 import 'package:pump/core/utils/ui_utils.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
 
@@ -12,7 +13,6 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/navigation_utils.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../providers/auth_providers.dart';
-import '../providers/auth_state.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -32,8 +32,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Listen for changes in authState to react after registration
-    ref.listen<AuthState>(authViewModelProvider, (previous, next) {
+    ref.listen<UiState>(authViewModelProvider, (previous, next) {
       if (previous?.isLoading == true && next.isLoading == false) {
         if (next.errorMessage == null) {
           if (!mounted) return;

@@ -41,6 +41,10 @@ class AppStrings {
   static const comment = "Comment";
   static const share = "Share";
 
+  // Create Post Page
+  static const createPost = "Create Post";
+  static const whatsOnYourMind = "What's on your mind?";
+
   // About Page
   static const about = "About";
   static const aboutPage = "About page";

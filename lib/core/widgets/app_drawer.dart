@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/enums/app_menu_item.dart';
 import 'package:pump/core/utils/ui_utils.dart';
+import 'package:pump/features/auth/domain/entities/user.dart';
 
 import '../constants/app_dimens.dart';
 import '../theme/app_colors.dart';
@@ -10,15 +11,13 @@ import '../theme/app_text_styles.dart';
 class AppDrawer extends StatelessWidget {
   final String selectedRoute;
   final VoidCallback onSignOut;
-  final String userName;
-  final String email;
+  final User currentUser;
 
   const AppDrawer({
     super.key,
     required this.selectedRoute,
     required this.onSignOut,
-    this.userName = "John Martin Marasigan",
-    this.email = "marasiganjohnmartin@gmail.com",
+    required this.currentUser,
   });
 
   @override
@@ -49,8 +48,11 @@ class AppDrawer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(userName, style: AppTextStyles.heading2),
-                        Text(email, style: AppTextStyles.bodySmall),
+                        Text(
+                          "${currentUser.firstName} ${currentUser.lastName}",
+                          style: AppTextStyles.heading2,
+                        ),
+                        Text(currentUser.email, style: AppTextStyles.bodySmall),
                       ],
                     ),
                   ),

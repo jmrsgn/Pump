@@ -1,51 +1,55 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump/features/auth/domain/usecases/login_usecase.dart';
-import 'package:pump/features/auth/domain/usecases/logout_usecase.dart';
-import 'package:pump/features/auth/domain/usecases/register_usecase.dart';
-import '../../../../core/constants/app_strings.dart';
-import '../providers/auth_state.dart';
+import 'package:pump/core/constants/app_strings.dart';
+import 'package:pump/core/providers/ui_state.dart';
+import '../../data/dto/auth_response_dto.dart';
+import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/logout_usecase.dart';
+import '../../domain/usecases/register_usecase.dart';
 
-class AuthViewModel extends StateNotifier<AuthState> {
+class AuthViewModel extends StateNotifier<UiState> {
   final LoginUseCase _loginUseCase;
   final RegisterUseCase _registerUseCase;
   final LogoutUseCase _logoutUseCase;
 
   AuthViewModel(this._loginUseCase, this._registerUseCase, this._logoutUseCase)
-    : super(AuthState.initial());
+    : super(UiState.initial());
 
-  Future<void> login(String username, String password) async {
-    // Reset previous errors
-    state = state.copyWith(errorMessage: null, isLoading: true);
+  void emitError(String errorMessage) async {
+    state = state.copyWith(isLoading: false, errorMessage: errorMessage);
+  }
 
-    // Validation
-    if (username.isEmpty || password.isEmpty) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: AppStrings.usernameAndPasswordAreRequired,
-      );
-      return;
-    }
-
+  /// Shared async executor
+  Future<void> _execute(Future<AuthResponse?> Function() action) async {
     try {
-      final response = await _loginUseCase.execute(username, password);
+      final response = await action();
 
       if (response == null) {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: AppStrings.invalidCredentials,
-        );
+        emitError(AppStrings.invalidCredentials);
       } else {
         state = state.copyWith(
           isLoading: false,
-          authResponse: response,
           errorMessage: response.errorMessage,
         );
       }
     } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: e.toString());
+      emitError(e.toString());
     }
   }
 
+  /// Login
+  Future<void> login(String username, String password) async {
+    // Reset previous errors
+    state = state.copyWith(isLoading: true, errorMessage: null);
+
+    if (username.trim().isEmpty || password.trim().isEmpty) {
+      emitError(AppStrings.usernameAndPasswordAreRequired);
+      return;
+    }
+
+    await _execute(() => _loginUseCase.execute(username, password));
+  }
+
+  /// Register
   Future<void> register(
     String firstName,
     String lastName,
@@ -54,59 +58,39 @@ class AuthViewModel extends StateNotifier<AuthState> {
     int role,
     String password,
   ) async {
-    // Reset previous errors
-    state = state.copyWith(errorMessage: null, isLoading: true);
-
-    // Validation
-    if ([firstName, lastName, email, phone, password].any((e) => e.isEmpty)) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: AppStrings.allFieldsAreRequired,
-      );
+    if ([
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+    ].any((e) => e.trim().isEmpty)) {
+      emitError(AppStrings.allFieldsAreRequired);
       return;
     }
 
-    try {
-      final response = await _registerUseCase.execute(
+    state = state.copyWith(isLoading: true, errorMessage: null);
+    await _execute(
+      () => _registerUseCase.execute(
         firstName,
         lastName,
         email,
         phone,
         role,
         password,
-      );
-
-      if (response == null) {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: AppStrings.invalidCredentials,
-        );
-      } else {
-        state = state.copyWith(
-          isLoading: false,
-          authResponse: response,
-          errorMessage: response.errorMessage,
-        );
-      }
-    } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: e.toString());
-    }
+      ),
+    );
   }
 
+  /// Logout
   Future<void> logout() async {
-    // Reset previous errors
-    state = state.copyWith(errorMessage: null, isLoading: true);
+    state = state.copyWith(isLoading: true, errorMessage: null);
 
     try {
       await _logoutUseCase.execute();
       state = state.copyWith(isLoading: false);
     } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: e.toString());
+      emitError(e.toString());
     }
-  }
-
-  /// Resets the state to its initial values
-  void resetState() {
-    state = AuthState.initial();
   }
 }

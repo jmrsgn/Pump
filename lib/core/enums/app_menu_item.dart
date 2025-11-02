@@ -7,7 +7,7 @@ enum AppMenuItem {
   profile(
     title: AppStrings.profile,
     icon: Icon(Icons.person_outline),
-    route: AppRoutes.profile,
+    route: AppRoutes.userProfile,
   ),
   messages(
     title: AppStrings.messages,
