@@ -37,16 +37,16 @@ class AuthViewModel extends StateNotifier<UiState> {
   }
 
   /// Login
-  Future<void> login(String username, String password) async {
+  Future<void> login(String email, String password) async {
     // Reset previous errors
     state = state.copyWith(isLoading: true, errorMessage: null);
 
-    if (username.trim().isEmpty || password.trim().isEmpty) {
-      emitError(AppStrings.usernameAndPasswordAreRequired);
+    if (email.trim().isEmpty || password.trim().isEmpty) {
+      emitError(AppStrings.emailAndPasswordAreRequired);
       return;
     }
 
-    await _execute(() => _loginUseCase.execute(username, password));
+    await _execute(() => _loginUseCase.execute(email, password));
   }
 
   /// Register
@@ -58,6 +58,9 @@ class AuthViewModel extends StateNotifier<UiState> {
     int role,
     String password,
   ) async {
+    // Reset previous errors
+    state = state.copyWith(isLoading: true, errorMessage: null);
+
     if ([
       firstName,
       lastName,
@@ -69,7 +72,6 @@ class AuthViewModel extends StateNotifier<UiState> {
       return;
     }
 
-    state = state.copyWith(isLoading: true, errorMessage: null);
     await _execute(
       () => _registerUseCase.execute(
         firstName,
@@ -84,6 +86,7 @@ class AuthViewModel extends StateNotifier<UiState> {
 
   /// Logout
   Future<void> logout() async {
+    // Reset previous errors
     state = state.copyWith(isLoading: true, errorMessage: null);
 
     try {

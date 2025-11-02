@@ -20,8 +20,7 @@ class AppStrings {
   static const registerHere = "Register here";
   static const invalidCredentials = "Invalid credentials";
   static const successfullyLoggedIn = "Successfully logged in";
-  static const usernameAndPasswordAreRequired =
-      "Username and password are required";
+  static const emailAndPasswordAreRequired = "Email and password are required";
 
   // Register Page
   static const register = 'Register';
