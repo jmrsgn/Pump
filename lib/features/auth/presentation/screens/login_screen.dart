@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump/core/constants/app_constants.dart';
 import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/providers/ui_state.dart';
 import 'package:pump/core/routes.dart';
@@ -68,7 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AppStrings.appName,
+                          AppConstants.appName,
                           style: AppTextStyles.heading1.copyWith(fontSize: 42),
                         ),
                         Text(

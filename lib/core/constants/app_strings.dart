@@ -2,7 +2,6 @@ class AppStrings {
   AppStrings._();
 
   // Common
-  static const appName = 'Pump';
   static const email = "Email";
   static const password = 'Password';
   static const allYouNeedInOneApp = "All you need, in one app";

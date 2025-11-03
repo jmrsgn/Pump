@@ -1,6 +1,6 @@
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:pump/features/auth/domain/usecases/logout_usecase.dart';
-// import '../../data/repository/auth_repository_impl.dart';
+// import '../../data/repositories/auth_repository_impl.dart';
 // import '../../data/services/auth_service.dart';
 // import '../../domain/usecases/login_usecase.dart';
 // import '../../domain/usecases/register_usecase.dart';
@@ -19,9 +19,9 @@
 // final authViewModelProvider = StateNotifierProvider<AuthViewModel, AuthState>((
 //   ref,
 // ) {
-//   final repository = ref.watch(authRepositoryProvider);
-//   final loginUseCase = LoginUseCase(repository);
-//   final registerUseCase = RegisterUseCase(repository);
-//   final logoutUseCase = LogoutUseCase(repository);
+//   final repositories = ref.watch(authRepositoryProvider);
+//   final loginUseCase = LoginUseCase(repositories);
+//   final registerUseCase = RegisterUseCase(repositories);
+//   final logoutUseCase = LogoutUseCase(repositories);
 //   return AuthViewModel(loginUseCase, registerUseCase, logoutUseCase);
 // });

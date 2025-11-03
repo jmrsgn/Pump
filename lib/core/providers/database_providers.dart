@@ -1,20 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../app_database.dart';
-import '../dao/user_dao.dart';
+import 'package:pump/core/constants/app_constants.dart';
+import 'package:pump/core/app_database.dart';
+import 'package:pump/core/dao/user_dao.dart';
 
 final appDatabaseProvider = FutureProvider<AppDatabase>((ref) async {
-  final database = await $FloorAppDatabase
-      .databaseBuilder('pump.db')
-      .build();
-  return database;
+  return await $FloorAppDatabase.databaseBuilder(AppConstants.dbName).build();
 });
 
-final userDaoProvider = Provider<UserDao>((ref) {
-  final db = ref
-      .watch(appDatabaseProvider)
-      .maybeWhen(
-        data: (db) => db,
-        orElse: () => throw Exception("Database not ready"),
-      );
+final userDaoProvider = FutureProvider<UserDao>((ref) async {
+  final db = await ref.watch(appDatabaseProvider.future);
   return db.userDao;
 });

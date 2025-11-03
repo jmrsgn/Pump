@@ -1,9 +1,11 @@
 import 'package:floor/floor.dart';
 
-@entity
+import '../constants/user_entity_constants.dart';
+
+@Entity(tableName: UserEntityConstants.tableName)
 class UserEntity {
   @primaryKey
-  final String email; // using email as primary key
+  final String email;
   final String firstName;
   final String lastName;
   final String phone;

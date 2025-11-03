@@ -1,5 +1,4 @@
-import 'package:pump/core/utils/token_storage.dart';
-import 'package:pump/features/auth/domain/entities/user.dart';
+import 'package:pump/core/utils/secure_storage.dart';
 
 import '../../../../core/dao/user_dao.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -11,9 +10,10 @@ import '../services/auth_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthService _authService;
-  final TokenStorage _storage = TokenStorage();
+  final SecureStorage _secureStorage = SecureStorage();
+  final UserDao _userDao;
 
-  AuthRepositoryImpl(this._authService);
+  AuthRepositoryImpl(this._authService, this._userDao);
 
   @override
   Future<AuthResponse?> login(LoginRequest request) async {
@@ -21,18 +21,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
     // Makes sure token is present
     if (authResponse != null && authResponse.token != null) {
-      await _storage.saveToken(authResponse.token!);
+      await _secureStorage.saveToken(authResponse.token!);
     }
 
-    // final UserResponse userResponse = authResponse!.userResponse!;
-    // final user = User(
-    //   firstName: userResponse.firstName == null ? "" : userResponse.firstName!,
-    //   lastName: userResponse.lastName!,
-    //   email: userResponse.email!,
-    //   phone: userResponse.phone!,
-    //   role: userResponse.role!,
-    // );
-    // await _userDao.insertUser(user.toEntity());
+    // Save current logged in profile
+    final UserResponse userResponse = authResponse!.userResponse!;
+    await _secureStorage.saveCurrentLoggedInUserEmail(userResponse.email!);
 
     return authResponse;
   }
@@ -44,11 +38,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<String?> getSavedToken() async {
-    return _storage.getToken();
+    return _secureStorage.getToken();
   }
 
   @override
   Future<void> logout() async {
-    await _storage.deleteToken();
+    await _secureStorage.deleteCurrentLoggedInUserEmail();
+    await _secureStorage.deleteToken();
   }
 }

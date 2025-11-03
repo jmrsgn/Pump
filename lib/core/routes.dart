@@ -9,7 +9,7 @@ import 'package:pump/features/posts/presentation/screens/create_post_screen.dart
 import 'package:pump/features/posts/presentation/screens/favorites_screen.dart';
 import '../features/info/presentation/screens/about.dart';
 import '../features/posts/presentation/screens/main_feed_screen.dart';
-import '../features/user/presentation/screens/user_profile.dart';
+import '../features/profile/presentation/screens/user_profile.dart';
 
 class AppRoutes {
   // Auth

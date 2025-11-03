@@ -12,7 +12,7 @@ abstract class UserDao {
   Future<void> updateUser(UserEntity user);
 
   @Query(
-    'SELECT * FROM ${UserEntityConstants.tableName} WHERE ${UserEntityConstants.columnEmail}} = :email',
+    'SELECT * FROM ${UserEntityConstants.tableName} WHERE ${UserEntityConstants.columnEmail} = :email',
   )
   Future<UserEntity?> getUserByEmail(String email);
 
