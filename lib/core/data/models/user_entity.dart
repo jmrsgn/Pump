@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
 
-import '../constants/user_entity_constants.dart';
+import '../../constants/user_entity_constants.dart';
 
 @Entity(tableName: UserEntityConstants.tableName)
 class UserEntity {

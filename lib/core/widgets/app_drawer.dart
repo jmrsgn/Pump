@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/enums/app_menu_item.dart';
 import 'package:pump/core/utils/ui_utils.dart';
-import 'package:pump/features/auth/domain/entities/user.dart';
 
-import '../constants/app_dimens.dart';
+import '../constants/app/app_dimens.dart';
+import '../constants/app/app_strings.dart';
+import '../domain/entities/user.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 

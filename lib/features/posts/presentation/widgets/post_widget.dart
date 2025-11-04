@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/app_dimens.dart';
 import 'package:pump/core/theme/app_text_styles.dart';
 import 'package:pump/core/utils/ui_utils.dart';
-import '../../../../core/constants/app_strings.dart';
+import '../../../../core/constants/app/app_dimens.dart';
+import '../../../../core/constants/app/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class PostWidget extends StatelessWidget {

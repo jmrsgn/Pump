@@ -1,13 +1,12 @@
-import 'package:pump/core/constants/app_strings.dart';
-
+import '../../../../core/constants/app/app_strings.dart';
 import '../../data/dto/auth_response_dto.dart';
 import '../../data/dto/register_request_dto.dart';
 import '../repositories/auth_repository.dart';
 
 class RegisterUseCase {
-  final AuthRepository repository;
+  final AuthRepository _authRepository;
 
-  RegisterUseCase(this.repository);
+  RegisterUseCase(this._authRepository);
 
   Future<AuthResponse?> execute(
     String firstName,
@@ -26,6 +25,6 @@ class RegisterUseCase {
       profileImageUrl: null,
       password: password,
     );
-    return await repository.register(request);
+    return await _authRepository.register(request);
   }
 }

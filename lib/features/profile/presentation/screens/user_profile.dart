@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/constants/app_strings.dart';
 import 'package:pump/core/theme/app_text_styles.dart';
 import 'package:pump/core/utils/ui_utils.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
 
-import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/constants/app/app_dimens.dart';
+import '../../../../core/constants/app/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/navigation_utils.dart';
 
@@ -44,7 +44,10 @@ class UserProfileScreen extends StatelessWidget {
                   UiUtils.addVerticalSpaceM(),
 
                   Text("John Martin Marasigan", style: AppTextStyles.heading1),
-                  Text("marasiganjohnmartin@gmail.com", style: AppTextStyles.bodySmall),
+                  Text(
+                    "marasiganjohnmartin@gmail.com",
+                    style: AppTextStyles.bodySmall,
+                  ),
 
                   UiUtils.addVerticalSpaceS(),
 

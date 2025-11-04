@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump/core/providers/database_providers.dart';
-import 'package:pump/core/providers/ui_state.dart';
 import 'package:pump/features/auth/domain/usecases/logout_usecase.dart';
+import '../../../../core/presentation/providers/database_providers.dart';
+import '../../../../core/presentation/providers/ui_state.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 import '../../data/services/auth_service.dart';
 import '../../domain/usecases/login_usecase.dart';

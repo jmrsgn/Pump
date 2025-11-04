@@ -1,34 +1,36 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:pump/features/auth/data/dto/user_response_dto.dart';
-
+import 'package:pump/core/data/dto/user_response_dto.dart';
 import 'package:http/http.dart' as http;
 
-import '../../constants/api_constants.dart';
-import '../../constants/api_status.dart';
+import '../../constants/api/api_constants.dart';
+import '../dto/api_error_response.dart';
+import '../dto/result.dart';
 
 class UserService {
-  Future<UserResponse?> getProfile(String token) async {
+  Future<Result<UserResponse>> getCurrentUser(String token) async {
     try {
       final response = await http.get(
-        Uri.parse(ApiConstants.loginUrl),
+        Uri.parse(ApiConstants.profileUrl),
         headers: {...ApiConstants.headerType, 'Authorization': 'Bearer $token'},
       );
 
-      final json = jsonDecode(response.body);
-
-      if (response.statusCode == ApiStatus.success ||
-          response.statusCode == ApiStatus.created) {
-        return UserResponse.fromJson(json);
+      if (response.statusCode == HttpStatus.ok ||
+          response.statusCode == HttpStatus.created) {
+        final user = UserResponse.fromJson(jsonDecode(response.body));
+        return Result.success(user);
       } else {
-        return null;
+        final error = ApiErrorResponse.fromJson(jsonDecode(response.body));
+        return Result.failure(error);
       }
     } catch (e) {
-      return null;
+      final error = ApiErrorResponse(
+        status: HttpStatus.internalServerError,
+        error: e.toString(),
+        message: e.toString(),
+      );
+      return Result.failure(error);
     }
-  }
-
-  Future<UserResponse?> getUserByEmail(String email, String token) async {
-    // TODO:
   }
 }

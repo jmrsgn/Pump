@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:pump/features/auth/domain/entities/user.dart';
+
+import '../../domain/entities/user.dart';
 
 class UserState extends Equatable {
   final User user;

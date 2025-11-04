@@ -7,6 +7,11 @@ class ApiConstants {
   static const String baseUrl =
       'http://10.0.2.2:8080/api/v1'; // for Android emulator
   // For iOS simulator, use http://localhost:8080/api/v1
+
+  // Auth
   static const String loginUrl = "$baseUrl/auth/login";
   static const String registerUrl = "$baseUrl/auth/register";
+
+  // Profile
+  static const String profileUrl = "$baseUrl/user/profile";
 }

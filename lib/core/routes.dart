@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/screens/invalid_route.dart';
+import 'package:pump/core/presentation/screens/invalid_route.dart';
 import 'package:pump/features/auth/presentation/screens/login_screen.dart';
 import 'package:pump/features/auth/presentation/screens/register_screen.dart';
 import 'package:pump/features/chat/presentation/screens/messages.dart';

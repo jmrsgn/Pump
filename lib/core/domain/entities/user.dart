@@ -1,4 +1,4 @@
-import '../../../../core/models/user_entity.dart';
+import '../../../../core/data/models/user_entity.dart';
 
 class User {
   final String firstName;

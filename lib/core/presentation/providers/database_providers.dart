@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump/core/constants/app_constants.dart';
+import 'package:pump/core/constants/app/app_constants.dart';
 import 'package:pump/core/app_database.dart';
-import 'package:pump/core/dao/user_dao.dart';
+
+import '../../data/dao/user_dao.dart';
 
 final appDatabaseProvider = FutureProvider<AppDatabase>((ref) async {
   return await $FloorAppDatabase.databaseBuilder(AppConstants.dbName).build();

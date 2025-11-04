@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_strings.dart';
+import '../constants/app/app_strings.dart';
 import '../routes.dart';
 
 enum AppMenuItem {
@@ -35,7 +35,6 @@ enum AppMenuItem {
     route: AppRoutes.about,
   );
 
-  // --- Fields ---
   final String title;
   final Widget icon;
   final String route;

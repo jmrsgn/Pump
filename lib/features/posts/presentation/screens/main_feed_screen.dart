@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump/core/constants/app_strings.dart';
-import 'package:pump/core/providers/user_state.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/utils/navigation_utils.dart';
 import 'package:pump/core/widgets/app_drawer.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
-import 'package:pump/features/auth/domain/entities/user.dart';
 import 'package:pump/features/posts/presentation/widgets/post_widget.dart';
+import '../../../../core/constants/app/app_strings.dart';
+import '../../../../core/domain/entities/user.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class MainFeedScreen extends ConsumerStatefulWidget {

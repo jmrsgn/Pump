@@ -3,12 +3,12 @@ import '../../data/dto/login_request_dto.dart';
 import '../repositories/auth_repository.dart';
 
 class LoginUseCase {
-  final AuthRepository _repository;
+  final AuthRepository _authRepository;
 
-  LoginUseCase(this._repository);
+  LoginUseCase(this._authRepository);
 
   Future<AuthResponse?> execute(String email, String password) async {
     final request = LoginRequest(email: email, password: password);
-    return await _repository.login(request);
+    return await _authRepository.login(request);
   }
 }

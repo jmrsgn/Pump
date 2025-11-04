@@ -11,7 +11,6 @@ class AppStrings {
   static const name = "Name";
   static const message = "Message";
   static const submit = "Submit";
-  static const anUnexpectedErrorOccurred = "An unexpected error occurred";
 
   // Login Page
   static const login = 'Login';

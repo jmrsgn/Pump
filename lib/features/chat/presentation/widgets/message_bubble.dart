@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pump/core/utils/ui_utils.dart';
 
-import '../../../../core/constants/app_dimens.dart';
+import '../../../../core/constants/app/app_dimens.dart';
 import '../../domain/entities/message.dart';
 
 class _LocalColors {

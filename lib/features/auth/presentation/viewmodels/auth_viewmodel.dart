@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump/core/constants/app_strings.dart';
-import 'package:pump/core/providers/ui_state.dart';
+import '../../../../core/constants/app/app_strings.dart';
+import '../../../../core/presentation/providers/ui_state.dart';
 import '../../data/dto/auth_response_dto.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';

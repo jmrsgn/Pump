@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump/core/constants/app_dimens.dart';
-import 'package:pump/core/constants/app_strings.dart';
-import 'package:pump/core/providers/ui_state.dart';
 import 'package:pump/core/utils/ui_utils.dart';
 import 'package:pump/core/widgets/custom_scaffold.dart';
 
+import '../../../../core/constants/app/app_dimens.dart';
+import '../../../../core/constants/app/app_strings.dart';
+import '../../../../core/presentation/providers/ui_state.dart';
 import '../../../../core/routes.dart';
 import '../../../../core/theme/app_button_styles.dart';
 import '../../../../core/theme/app_colors.dart';

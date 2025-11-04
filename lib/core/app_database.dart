@@ -1,8 +1,8 @@
 import 'package:floor/floor.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart' as sqflite;
-import 'dao/user_dao.dart';
-import 'models/user_entity.dart';
+import 'data/dao/user_dao.dart';
+import 'data/models/user_entity.dart';
 
 part 'app_database.g.dart';
 
