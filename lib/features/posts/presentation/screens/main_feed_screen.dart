@@ -46,16 +46,18 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
         ],
       ),
       backgroundColor: AppColors.background,
-      drawer: AppDrawer(
-        currentUser: userState.user!,
-        onSignOut: () async {
-          await authViewModel.logout();
-          if (context.mounted) {
-            NavigationUtils.replaceWith(context, AppRoutes.login);
-          }
-        },
-        selectedRoute: AppRoutes.mainFeed,
-      ),
+      drawer: userState.user == null
+          ? const SizedBox.shrink()
+          : AppDrawer(
+              currentUser: userState.user!,
+              onSignOut: () async {
+                await authViewModel.logout();
+                if (context.mounted) {
+                  NavigationUtils.replaceWith(context, AppRoutes.login);
+                }
+              },
+              selectedRoute: AppRoutes.mainFeed,
+            ),
       body: ListView.builder(
         itemCount: 1,
         itemBuilder: (context, index) {
