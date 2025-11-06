@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/theme/app_text_styles.dart';
-import '../constants/app/app_dimens.dart';
+import '../../constants/app/app_dimens.dart';
 import 'app_colors.dart';
+import 'app_text_styles.dart';
 
 class AppButtonStyles {
   static final normal = ButtonStyle(

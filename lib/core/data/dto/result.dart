@@ -1,15 +1,15 @@
-import 'api_error_response.dart';
-
-class Result<T> {
+/// A generic Result class that can represent success or failure.
+/// The `E` type is used for error (ApiErrorResponse or AppError)
+class Result<T, E> {
   final T? data;
-  final ApiErrorResponse? error;
+  final E? error;
 
   bool get isSuccess => data != null && error == null;
   bool get isFailure => error != null;
 
   // Success constructor
-  Result.success(T this.data) : error = null;
+  const Result.success(this.data) : error = null;
 
   // Failure constructor
-  Result.failure(ApiErrorResponse this.error) : data = null;
+  const Result.failure(this.error) : data = null;
 }

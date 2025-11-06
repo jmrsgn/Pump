@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../constants/app/app_strings.dart';
+import '../../constants/app/app_strings.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hint;

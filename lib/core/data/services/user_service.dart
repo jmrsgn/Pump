@@ -9,7 +9,9 @@ import '../dto/api_error_response.dart';
 import '../dto/result.dart';
 
 class UserService {
-  Future<Result<UserResponse>> getCurrentUser(String token) async {
+  Future<Result<UserResponse, ApiErrorResponse>> getCurrentUser(
+    String token,
+  ) async {
     try {
       final response = await http.get(
         Uri.parse(ApiConstants.profileUrl),

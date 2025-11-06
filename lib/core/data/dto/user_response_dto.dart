@@ -1,3 +1,5 @@
+import 'package:pump/core/domain/entities/user.dart';
+
 class UserResponse {
   final String? firstName;
   final String? lastName;
@@ -26,6 +28,17 @@ class UserResponse {
       phone: json['phone'],
       role: json['role'],
       profileImageUrl: json['profileImageUrl'],
+    );
+  }
+
+  User toUser() {
+    return User(
+      firstName: firstName ?? '',
+      lastName: lastName ?? '',
+      email: email ?? '',
+      phone: phone ?? '',
+      role: role ?? 0,
+      profileImageUrl: profileImageUrl,
     );
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/theme/app_colors.dart';
 import 'package:pump/core/utils/ui_utils.dart';
-import 'package:pump/core/widgets/custom_scaffold.dart';
 import 'package:pump/features/chat/domain/entities/message.dart';
 
 import '../../../../core/constants/app/app_dimens.dart';
 import '../../../../core/constants/app/app_strings.dart';
+import '../../../../core/presentation/theme/app_colors.dart';
+import '../../../../core/presentation/widgets/custom_scaffold.dart';
 import '../widgets/message_bubble.dart';
 
 class MessagesScreen extends StatefulWidget {

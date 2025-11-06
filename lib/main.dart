@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pump/core/constants/app/app_constants.dart';
 import 'package:pump/core/routes.dart';
-import 'package:pump/core/theme/app_theme.dart';
+
+import 'core/presentation/theme/app_theme.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));

@@ -1,6 +1,8 @@
-import 'package:pump/core/data/dto/result.dart';
-import 'package:pump/core/data/dto/user_response_dto.dart';
+import 'package:pump/core/domain/entities/user.dart';
+import 'package:pump/core/errors/app_error.dart';
+
+import '../../data/dto/result.dart';
 
 abstract class UserRepository {
-  Future<Result<UserResponse>> getCurrentUser();
+  Future<Result<User, AppError>> getCurrentUser();
 }

@@ -38,7 +38,6 @@ class AuthViewModel extends StateNotifier<UiState> {
 
   /// Login
   Future<void> login(String email, String password) async {
-    // Reset previous errors
     state = state.copyWith(isLoading: true, errorMessage: null);
 
     if (email.trim().isEmpty || password.trim().isEmpty) {
@@ -58,7 +57,6 @@ class AuthViewModel extends StateNotifier<UiState> {
     int role,
     String password,
   ) async {
-    // Reset previous errors
     state = state.copyWith(isLoading: true, errorMessage: null);
 
     if ([

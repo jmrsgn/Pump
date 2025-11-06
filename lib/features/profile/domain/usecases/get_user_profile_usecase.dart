@@ -1,6 +1,7 @@
-import 'package:pump/core/data/dto/result.dart';
-import 'package:pump/core/data/dto/user_response_dto.dart';
+import 'package:pump/core/errors/app_error.dart';
 
+import '../../../../core/data/dto/result.dart';
+import '../../../../core/domain/entities/user.dart';
 import '../../../../core/domain/repositories/user_repository.dart';
 
 class GetUserProfileUseCase {
@@ -8,7 +9,7 @@ class GetUserProfileUseCase {
 
   GetUserProfileUseCase(this._userRepository);
 
-  Future<Result<UserResponse>> execute() async {
+  Future<Result<User, AppError>> execute() async {
     return await _userRepository.getCurrentUser();
   }
 }

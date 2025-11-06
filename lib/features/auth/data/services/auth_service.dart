@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:pump/core/constants/api/api_messages.dart';
 
 import '../../../../core/constants/api/api_constants.dart';
+import '../../../../core/constants/app/app_strings.dart';
 import '../dto/auth_response_dto.dart';
 import '../dto/login_request_dto.dart';
 import '../dto/register_request_dto.dart';
@@ -27,14 +27,14 @@ class AuthService {
           token: null,
           userResponse: null,
           errorMessage:
-              json['errorMessage'] ?? ApiMessages.anUnexpectedErrorOccurred,
+              json['errorMessage'] ?? AppStrings.anUnexpectedErrorOccurred,
         );
       }
     } catch (e) {
       return AuthResponse(
         token: null,
         userResponse: null,
-        errorMessage: '${ApiMessages.anUnexpectedErrorOccurred}: $e',
+        errorMessage: '${AppStrings.anUnexpectedErrorOccurred}: $e',
       );
     }
   }
@@ -57,14 +57,14 @@ class AuthService {
           token: null,
           userResponse: null,
           errorMessage:
-              json['errorMessage'] ?? ApiMessages.anUnexpectedErrorOccurred,
+              json['errorMessage'] ?? AppStrings.anUnexpectedErrorOccurred,
         );
       }
     } catch (e) {
       return AuthResponse(
         token: null,
         userResponse: null,
-        errorMessage: '${ApiMessages.anUnexpectedErrorOccurred}: $e',
+        errorMessage: '${AppStrings.anUnexpectedErrorOccurred}: $e',
       );
     }
   }

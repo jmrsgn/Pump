@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pump/core/theme/app_colors.dart';
-import 'package:pump/core/theme/app_text_styles.dart';
 
 import '../constants/app/app_dimens.dart';
 import '../constants/app/app_strings.dart';
+import '../presentation/theme/app_colors.dart';
+import '../presentation/theme/app_text_styles.dart';
 
 class UiUtils {
   UiUtils._();

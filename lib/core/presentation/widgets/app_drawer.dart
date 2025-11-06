@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pump/core/enums/app_menu_item.dart';
 import 'package:pump/core/utils/ui_utils.dart';
 
-import '../constants/app/app_dimens.dart';
-import '../constants/app/app_strings.dart';
-import '../domain/entities/user.dart';
+import '../../constants/app/app_dimens.dart';
+import '../../constants/app/app_strings.dart';
+import '../../domain/entities/user.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -34,14 +34,26 @@ class AppDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/jm.jpg"),
-                  radius: AppDimens.radiusXXXL,
+                Expanded(
+                  flex: 1,
+                  child: currentUser.profileImageUrl == null
+                      ? const Icon(
+                          Icons.person,
+                          color: AppColors.textPrimary,
+                          size: AppDimens.radiusXXXL,
+                        )
+                      : CircleAvatar(
+                          backgroundImage: AssetImage(
+                            currentUser.profileImageUrl!,
+                          ),
+                          radius: AppDimens.radiusXXXL,
+                        ),
                 ),
 
                 UiUtils.addHorizontalSpaceL(),
 
                 Expanded(
+                  flex: 2,
                   child: Container(
                     color: AppColors.background,
                     child: Column(
@@ -52,6 +64,7 @@ class AppDrawer extends StatelessWidget {
                           "${currentUser.firstName} ${currentUser.lastName}",
                           style: AppTextStyles.heading2,
                         ),
+                        UiUtils.addVerticalSpaceXS(),
                         Text(currentUser.email, style: AppTextStyles.bodySmall),
                       ],
                     ),
@@ -60,7 +73,8 @@ class AppDrawer extends StatelessWidget {
               ],
             ),
           ),
-          // 🔥 Loop through enum values here
+
+          // Menu Items
           for (final item in AppMenuItem.values)
             _buildDrawerItem(context: context, item: item),
 
@@ -100,7 +114,7 @@ class AppDrawer extends StatelessWidget {
         Navigator.pop(context); // Close the drawer first
 
         if (selectedRoute != item.route) {
-          Navigator.pushNamed(context, item.route);
+          Navigator.pushNamed(context, item.route, arguments: currentUser);
         }
       },
     );

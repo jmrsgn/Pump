@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:pump/core/theme/app_text_styles.dart';
 import 'package:pump/core/utils/ui_utils.dart';
-import 'package:pump/core/widgets/custom_scaffold.dart';
 
 import '../../../../core/constants/app/app_dimens.dart';
 import '../../../../core/constants/app/app_strings.dart';
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core/domain/entities/user.dart';
+import '../../../../core/presentation/theme/app_colors.dart';
+import '../../../../core/presentation/theme/app_text_styles.dart';
+import '../../../../core/presentation/widgets/custom_scaffold.dart';
 import '../../../../core/utils/navigation_utils.dart';
 
 class UserProfileScreen extends StatelessWidget {
-  const UserProfileScreen({super.key});
+  final User currentUser;
+  const UserProfileScreen({super.key, required this.currentUser});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,12 @@ class UserProfileScreen extends StatelessWidget {
             NavigationUtils.handleBackNavigation(context);
           },
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.save, color: AppColors.textOnPrimary),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(AppDimens.pagePadding),
@@ -36,18 +44,26 @@ class UserProfileScreen extends StatelessWidget {
                 children: [
                   UiUtils.addVerticalSpaceS(),
 
-                  CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/jm.jpg"),
-                    radius: AppDimens.dimen64,
-                  ),
+                  currentUser.profileImageUrl == null
+                      ? const Icon(
+                          Icons.person,
+                          color: AppColors.textPrimary,
+                          size: AppDimens.dimen86,
+                        )
+                      : CircleAvatar(
+                          backgroundImage: AssetImage(
+                            currentUser.profileImageUrl!,
+                          ),
+                          radius: AppDimens.radiusXXXL,
+                        ),
 
                   UiUtils.addVerticalSpaceM(),
 
-                  Text("John Martin Marasigan", style: AppTextStyles.heading1),
                   Text(
-                    "marasiganjohnmartin@gmail.com",
-                    style: AppTextStyles.bodySmall,
+                    "${currentUser.firstName} ${currentUser.lastName}",
+                    style: AppTextStyles.heading1,
                   ),
+                  Text(currentUser.email, style: AppTextStyles.bodySmall),
 
                   UiUtils.addVerticalSpaceS(),
 

@@ -11,9 +11,8 @@ import '../services/auth_service.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final AuthService _authService;
   final SecureStorage _secureStorage = SecureStorage();
-  final UserDao _userDao;
 
-  AuthRepositoryImpl(this._authService, this._userDao);
+  AuthRepositoryImpl(this._authService);
 
   @override
   Future<AuthResponse?> login(LoginRequest request) async {
@@ -24,8 +23,6 @@ class AuthRepositoryImpl implements AuthRepository {
       await _secureStorage.saveToken(authResponse.token!);
     }
 
-    // TODO: remove this implementation, only token is needed to be saved
-    // Save current logged in profile
     final UserResponse userResponse = authResponse!.userResponse!;
     await _secureStorage.saveCurrentLoggedInUserEmail(userResponse.email!);
 

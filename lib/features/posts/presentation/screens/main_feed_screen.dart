@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump/core/presentation/providers/user_providers.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/utils/navigation_utils.dart';
-import 'package:pump/core/widgets/app_drawer.dart';
-import 'package:pump/core/widgets/custom_scaffold.dart';
 import 'package:pump/features/posts/presentation/widgets/post_widget.dart';
 import '../../../../core/constants/app/app_strings.dart';
-import '../../../../core/domain/entities/user.dart';
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core/presentation/theme/app_colors.dart';
+import '../../../../core/presentation/widgets/app_drawer.dart';
+import '../../../../core/presentation/widgets/custom_scaffold.dart';
+import '../../../auth/presentation/providers/auth_providers.dart';
 
 class MainFeedScreen extends ConsumerStatefulWidget {
   const MainFeedScreen({super.key});
@@ -17,24 +18,21 @@ class MainFeedScreen extends ConsumerStatefulWidget {
 }
 
 class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
-  void signOut() async {
-    Navigator.pushReplacementNamed(context, AppRoutes.login);
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(userViewModelProvider.notifier).initializeCurrentUser();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // final postState = ref.watch(authViewModelProvider);
-    // final authViewModel = ref.watch(authViewModelProvider.notifier);
-    final user = User(
-      firstName: "John Martin",
-      lastName: "Marasigan",
-      email: "marasiganjohnmartin@gmail.com",
-      phone: "+639561723007",
-      role: 1,
-      profileImageUrl: null,
-    );
+    final authViewModel = ref.watch(authViewModelProvider.notifier);
+    final userState = ref.watch(userViewModelProvider);
 
     return CustomScaffold(
+      isLoading: userState.isLoading,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         leading: Builder(
@@ -49,12 +47,17 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
       ),
       backgroundColor: AppColors.background,
       drawer: AppDrawer(
-        currentUser: user,
-        onSignOut: signOut,
-        selectedRoute: '',
+        currentUser: userState.user!,
+        onSignOut: () async {
+          await authViewModel.logout();
+          if (context.mounted) {
+            NavigationUtils.replaceWith(context, AppRoutes.login);
+          }
+        },
+        selectedRoute: AppRoutes.mainFeed,
       ),
       body: ListView.builder(
-        itemCount: 3,
+        itemCount: 1,
         itemBuilder: (context, index) {
           return PostWidget(
             description: AppStrings.placeholderParagraph2,

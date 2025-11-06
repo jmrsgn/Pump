@@ -11,6 +11,11 @@ class AppStrings {
   static const name = "Name";
   static const message = "Message";
   static const submit = "Submit";
+  static const anUnexpectedErrorOccurred = "An unexpected error occurred";
+  static const tokenIsMissing = "Token is missing";
+  static const userIsNotAuthenticated = "User is not authenticated";
+  static const unknownError = "Unknown error";
+  static const failedToFetchUserData = "Failed to fetch user data";
 
   // Login Page
   static const login = 'Login';

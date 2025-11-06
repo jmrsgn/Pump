@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/app/app_dimens.dart';
+import '../../constants/app/app_dimens.dart';
 import 'app_colors.dart';
 
 class AppInputDecorations {

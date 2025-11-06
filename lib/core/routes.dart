@@ -10,8 +10,11 @@ import 'package:pump/features/posts/presentation/screens/favorites_screen.dart';
 import '../features/info/presentation/screens/about.dart';
 import '../features/posts/presentation/screens/main_feed_screen.dart';
 import '../features/profile/presentation/screens/user_profile.dart';
+import 'domain/entities/user.dart';
 
 class AppRoutes {
+  AppRoutes._();
+
   // Auth
   static const String login = '/login';
   static const String register = '/register';
@@ -37,13 +40,16 @@ class AppRoutes {
       case register:
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case mainFeed:
-        return MaterialPageRoute(builder: (_) => const MainFeedScreen());
+        return MaterialPageRoute(builder: (_) => MainFeedScreen());
       case favorites:
         return MaterialPageRoute(builder: (_) => const FavoritesScreen());
       case createPost:
         return MaterialPageRoute(builder: (_) => const CreatePostScreen());
       case userProfile:
-        return MaterialPageRoute(builder: (_) => const UserProfileScreen());
+        final user = settings.arguments as User;
+        return MaterialPageRoute(
+          builder: (_) => UserProfileScreen(currentUser: user),
+        );
       case messages:
         return MaterialPageRoute(
           builder: (_) =>
