@@ -37,10 +37,13 @@ class AppDrawer extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: currentUser.profileImageUrl == null
-                      ? const Icon(
-                          Icons.person,
-                          color: AppColors.textPrimary,
-                          size: AppDimens.radiusXXXL,
+                      ? CircleAvatar(
+                          backgroundColor: AppColors.primary,
+                          radius: AppDimens.radiusXXXL,
+                          child: Text(
+                            currentUser.firstName[0],
+                            style: AppTextStyles.heading1.copyWith(fontSize: 48),
+                          ),
                         )
                       : CircleAvatar(
                           backgroundImage: AssetImage(

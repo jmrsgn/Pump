@@ -14,4 +14,7 @@ class ApiConstants {
 
   // Profile
   static const String profileUrl = "$baseUrl/user/profile";
+
+  // Post
+  static const String postUrl = "$baseUrl/post";
 }

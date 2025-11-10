@@ -16,6 +16,8 @@ class AppStrings {
   static const userIsNotAuthenticated = "User is not authenticated";
   static const unknownError = "Unknown error";
   static const failedToFetchUserData = "Failed to fetch user data";
+  static const internalServerError = "Internal server error";
+  static const routeError = "Route error";
 
   // Login Page
   static const login = 'Login';

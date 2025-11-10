@@ -1,22 +1,28 @@
-import 'package:pump/core/constants/app/app_strings.dart';
-import 'package:pump/core/data/services/user_service.dart';
-import 'package:pump/core/domain/entities/user.dart';
-import 'package:pump/core/errors/app_error.dart';
-import 'package:pump/core/utilities/logger_utility.dart';
-import 'package:pump/core/utils/secure_storage.dart';
 import 'package:pump/core/data/dto/result.dart';
+import 'package:pump/core/errors/app_error.dart';
+import 'package:pump/core/utils/secure_storage.dart';
+import 'package:pump/features/posts/data/services/post_service.dart';
+import 'package:pump/features/posts/domain/entities/post.dart';
 
-import '../../domain/repositories/user_repository.dart';
+import '../../../../core/constants/app/app_strings.dart';
+import '../../../../core/utilities/logger_utility.dart';
+import '../../domain/repositories/post_repository.dart';
 
-class UserRepositoryImpl extends UserRepository {
-  final UserService _userService;
+class PostRepositoryImpl implements PostRepository {
+  final PostService _postService;
   final SecureStorage _secureStorage;
 
-  UserRepositoryImpl(this._userService, {SecureStorage? secureStorage})
+  PostRepositoryImpl(this._postService, {SecureStorage? secureStorage})
     : _secureStorage = secureStorage ?? SecureStorage();
 
   @override
-  Future<Result<User, AppError>> getCurrentUser() async {
+  Future<Result<Post, AppError>> createPost(Map<String, dynamic> post) {
+    // TODO: implement createPost
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<List<Post>, AppError>> getAllPosts() async {
     try {
       final token = await _secureStorage.getToken();
       if (token == null || token.isEmpty) {
@@ -32,14 +38,14 @@ class UserRepositoryImpl extends UserRepository {
         );
       }
 
-      final result = await _userService.getCurrentUser(token);
+      final result = await _postService.getAllPosts(token);
 
       if (result.isSuccess && result.data != null) {
         LoggerUtility.v(
           runtimeType.toString(),
-          'User fetched: ${result.data!.toUser()}',
+          'Posts fetched: ${result.data!.map((e) => e.toPost())}',
         );
-        return Result.success(result.data!.toUser());
+        return Result.success(result.data!.cast<Post>().toList());
       }
 
       return Result.failure(

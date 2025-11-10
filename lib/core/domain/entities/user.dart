@@ -16,6 +16,11 @@ class User {
     required this.role,
     this.profileImageUrl,
   });
+
+  @override
+  String toString() {
+    return 'User{firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, role: $role, profileImageUrl: $profileImageUrl}';
+  }
 }
 
 extension UserMapper on User {

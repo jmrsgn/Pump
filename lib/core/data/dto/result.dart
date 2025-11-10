@@ -7,9 +7,6 @@ class Result<T, E> {
   bool get isSuccess => data != null && error == null;
   bool get isFailure => error != null;
 
-  // Success constructor
   const Result.success(this.data) : error = null;
-
-  // Failure constructor
   const Result.failure(this.error) : data = null;
 }

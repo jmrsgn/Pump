@@ -1,10 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump/core/errors/app_error.dart';
+import 'package:pump/core/utilities/logger_utility.dart';
 import '../../../../core/constants/app/app_strings.dart';
+import '../../../../core/data/dto/result.dart';
 import '../../../../core/presentation/providers/ui_state.dart';
 import '../../data/dto/auth_response_dto.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
+
+// TODO: separate to LoginViewModel and RegisterViewModel
 
 class AuthViewModel extends StateNotifier<UiState> {
   final LoginUseCase _loginUseCase;
@@ -19,20 +24,25 @@ class AuthViewModel extends StateNotifier<UiState> {
   }
 
   /// Shared async executor
-  Future<void> _execute(Future<AuthResponse?> Function() action) async {
+  Future<void> _execute(
+    Future<Result<AuthResponse, AppError>> Function() action,
+  ) async {
     try {
       final response = await action();
-
-      if (response == null) {
-        emitError(AppStrings.invalidCredentials);
+      if (response.isSuccess) {
+        state = state.copyWith(isLoading: false, errorMessage: null);
       } else {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: response.errorMessage,
-        );
+        LoggerUtility.d(runtimeType.toString(), response.error);
+        emitError(response.error!.message);
       }
-    } catch (e) {
-      emitError(e.toString());
+    } catch (e, stackTrace) {
+      LoggerUtility.e(
+        runtimeType.toString(),
+        AppStrings.anUnexpectedErrorOccurred,
+        e.toString(),
+        stackTrace,
+      );
+      emitError(AppStrings.anUnexpectedErrorOccurred);
     }
   }
 

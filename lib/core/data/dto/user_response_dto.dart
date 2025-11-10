@@ -37,7 +37,7 @@ class UserResponse {
       lastName: lastName ?? '',
       email: email ?? '',
       phone: phone ?? '',
-      role: role ?? 0,
+      role: role ?? 1,
       profileImageUrl: profileImageUrl,
     );
   }

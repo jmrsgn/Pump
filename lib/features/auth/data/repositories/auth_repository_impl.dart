@@ -1,11 +1,14 @@
+import 'package:pump/core/data/dto/api_error_response.dart';
+import 'package:pump/core/errors/app_error.dart';
+import 'package:pump/core/utilities/logger_utility.dart';
+import 'package:pump/core/utils/api_error_utils.dart';
 import 'package:pump/core/utils/secure_storage.dart';
 
-import '../../../../core/data/dao/user_dao.dart';
+import '../../../../core/data/dto/result.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../dto/auth_response_dto.dart';
 import '../dto/login_request_dto.dart';
 import '../dto/register_request_dto.dart';
-import '../../../../core/data/dto/user_response_dto.dart';
 import '../services/auth_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -15,23 +18,51 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._authService);
 
   @override
-  Future<AuthResponse?> login(LoginRequest request) async {
-    final AuthResponse? authResponse = await _authService.login(request);
+  Future<Result<AuthResponse, AppError>> login(LoginRequest request) async {
+    final Result<AuthResponse, ApiErrorResponse> result = await _authService
+        .login(request);
 
-    // Makes sure token is present
-    if (authResponse != null && authResponse.token != null) {
-      await _secureStorage.saveToken(authResponse.token!);
+    // If token is present, save it to secure storage
+    if (result.isSuccess && result.data?.token != null) {
+      LoggerUtility.d(runtimeType.toString(), 'Token: ${result.data?.token}');
+      await _secureStorage.saveToken(result.data!.token!);
     }
 
-    final UserResponse userResponse = authResponse!.userResponse!;
-    await _secureStorage.saveCurrentLoggedInUserEmail(userResponse.email!);
+    // TODO:
+    // final UserResponse userResponse = result.data!.userResponse!;
+    // await _secureStorage.saveCurrentLoggedInUserEmail(userResponse.email!);
 
-    return authResponse;
+    if (result.isSuccess) {
+      return Result.success(result.data!);
+    } else {
+      LoggerUtility.d(
+        runtimeType.toString(),
+        "Failed to login user. error: ${result.error}",
+      );
+      return Result.failure(
+        ApiErrorUtils.mapApiErrorResponseToAppError(result.error!),
+      );
+    }
   }
 
   @override
-  Future<AuthResponse?> register(RegisterRequest request) {
-    return _authService.register(request);
+  Future<Result<AuthResponse, AppError>> register(
+    RegisterRequest request,
+  ) async {
+    final Result<AuthResponse, ApiErrorResponse> result = await _authService
+        .register(request);
+
+    if (result.isSuccess) {
+      return Result.success(result.data!);
+    } else {
+      LoggerUtility.d(
+        runtimeType.toString(),
+        "Failed to login user. error: ${result.error}",
+      );
+      return Result.failure(
+        ApiErrorUtils.mapApiErrorResponseToAppError(result.error!),
+      );
+    }
   }
 
   @override

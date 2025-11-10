@@ -5,6 +5,8 @@ import 'package:pump/core/data/dto/user_response_dto.dart';
 import 'package:http/http.dart' as http;
 
 import '../../constants/api/api_constants.dart';
+import '../../constants/app/app_strings.dart';
+import '../../utilities/logger_utility.dart';
 import '../dto/api_error_response.dart';
 import '../dto/result.dart';
 
@@ -18,21 +20,27 @@ class UserService {
         headers: {...ApiConstants.headerType, 'Authorization': 'Bearer $token'},
       );
 
+      final json = jsonDecode(response.body);
+
       if (response.statusCode == HttpStatus.ok ||
           response.statusCode == HttpStatus.created) {
-        final user = UserResponse.fromJson(jsonDecode(response.body));
-        return Result.success(user);
+        return Result.success(UserResponse.fromJson(json['data']));
       } else {
-        final error = ApiErrorResponse.fromJson(jsonDecode(response.body));
-        return Result.failure(error);
+        return Result.failure(ApiErrorResponse.fromJson(json['error']));
       }
-    } catch (e) {
-      final error = ApiErrorResponse(
-        status: HttpStatus.internalServerError,
-        error: e.toString(),
-        message: e.toString(),
+    } catch (e, stackTrace) {
+      LoggerUtility.e(
+        runtimeType.toString(),
+        AppStrings.anUnexpectedErrorOccurred,
+        e.toString(),
+        stackTrace,
       );
-      return Result.failure(error);
+      final apiErrorResponse = ApiErrorResponse(
+        status: HttpStatus.internalServerError,
+        error: AppStrings.anUnexpectedErrorOccurred,
+        message: '${AppStrings.anUnexpectedErrorOccurred}: $e',
+      );
+      return Result.failure(apiErrorResponse);
     }
   }
 }

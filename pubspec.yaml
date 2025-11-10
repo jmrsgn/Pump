@@ -53,7 +53,6 @@ dependencies:
   archive: ^3.3.5
   decimal: ^2.1.0
   json_serializable: ^6.6.1
-  logger: ^1.2.2
   crypto: ^3.0.3
 #  path: ^1.9.3
 #  dio: ^6.1.2
@@ -62,6 +61,7 @@ dependencies:
 #  flutter_dotenv: ^6.1.0
 #  uuid: ^3.1.0
 #  validators: ^4.1.0
+  logger: ^2.4.0
 
 dev_dependencies:
   floor_generator: ^1.2.0

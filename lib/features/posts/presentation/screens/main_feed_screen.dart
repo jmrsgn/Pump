@@ -71,7 +71,7 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          NavigationUtils.navigateTo(context, AppRoutes.createPost);
+          NavigationUtils.navigateTo(context, AppRoutes.createPost, arguments: userState.user);
         },
         backgroundColor: AppColors.primary,
         child: const Icon(Icons.add),

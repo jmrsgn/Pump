@@ -11,8 +11,12 @@ class NavigationUtils {
   }
 
   // Push a new route (keeps previous)
-  static void navigateTo(BuildContext context, String routeName) {
-    Navigator.pushNamed(context, routeName);
+  static void navigateTo(
+    BuildContext context,
+    String routeName, {
+    Object? arguments,
+  }) {
+    Navigator.pushNamed(context, routeName, arguments: arguments);
   }
 
   // Replace current route (no going back)

@@ -1,15 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:pump/core/data/dto/api_error_response.dart';
+import 'package:pump/core/utilities/logger_utility.dart';
 
 import '../../../../core/constants/api/api_constants.dart';
 import '../../../../core/constants/app/app_strings.dart';
+import '../../../../core/data/dto/result.dart';
 import '../dto/auth_response_dto.dart';
 import '../dto/login_request_dto.dart';
 import '../dto/register_request_dto.dart';
 
 class AuthService {
-  Future<AuthResponse?> login(LoginRequest request) async {
+  Future<Result<AuthResponse, ApiErrorResponse>> login(
+    LoginRequest request,
+  ) async {
     try {
       final response = await http.post(
         Uri.parse(ApiConstants.loginUrl),
@@ -21,25 +26,24 @@ class AuthService {
 
       if (response.statusCode == HttpStatus.ok ||
           response.statusCode == HttpStatus.created) {
-        return AuthResponse.fromJson(json);
+        return Result.success(AuthResponse.fromJson(json['data']));
       } else {
-        return AuthResponse(
-          token: null,
-          userResponse: null,
-          errorMessage:
-              json['errorMessage'] ?? AppStrings.anUnexpectedErrorOccurred,
-        );
+        return Result.failure(ApiErrorResponse.fromJson(json['error']));
       }
-    } catch (e) {
-      return AuthResponse(
-        token: null,
-        userResponse: null,
-        errorMessage: '${AppStrings.anUnexpectedErrorOccurred}: $e',
+    } catch (e, stackTrace) {
+      LoggerUtility.e(e.toString(), stackTrace);
+      final apiErrorResponse = ApiErrorResponse(
+        status: HttpStatus.internalServerError,
+        error: AppStrings.anUnexpectedErrorOccurred,
+        message: AppStrings.anUnexpectedErrorOccurred,
       );
+      return Result.failure(apiErrorResponse);
     }
   }
 
-  Future<AuthResponse> register(RegisterRequest request) async {
+  Future<Result<AuthResponse, ApiErrorResponse>> register(
+    RegisterRequest request,
+  ) async {
     try {
       final response = await http.post(
         Uri.parse(ApiConstants.registerUrl),
@@ -51,21 +55,18 @@ class AuthService {
 
       if (response.statusCode == HttpStatus.ok ||
           response.statusCode == HttpStatus.created) {
-        return AuthResponse.fromJson(json);
+        return Result.success(AuthResponse.fromJson(json['data']));
       } else {
-        return AuthResponse(
-          token: null,
-          userResponse: null,
-          errorMessage:
-              json['errorMessage'] ?? AppStrings.anUnexpectedErrorOccurred,
-        );
+        return Result.failure(ApiErrorResponse.fromJson(json['error']));
       }
-    } catch (e) {
-      return AuthResponse(
-        token: null,
-        userResponse: null,
-        errorMessage: '${AppStrings.anUnexpectedErrorOccurred}: $e',
+    } catch (e, stackTrace) {
+      LoggerUtility.e(e.toString(), stackTrace);
+      final apiErrorResponse = ApiErrorResponse(
+        status: HttpStatus.internalServerError,
+        error: AppStrings.anUnexpectedErrorOccurred,
+        message: AppStrings.anUnexpectedErrorOccurred,
       );
+      return Result.failure(apiErrorResponse);
     }
   }
 }
