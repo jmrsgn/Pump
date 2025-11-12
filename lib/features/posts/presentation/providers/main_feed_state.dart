@@ -2,29 +2,29 @@ import 'package:pump/core/presentation/providers/ui_state.dart';
 
 import '../../domain/entities/post.dart';
 
-class CreatePostState extends UiState {
-  final Post? post;
+class MainFeedState extends UiState {
+  final List<Post>? posts;
 
-  const CreatePostState({super.isLoading, super.errorMessage, this.post});
+  const MainFeedState({super.isLoading, super.errorMessage, this.posts});
 
   @override
-  CreatePostState copyWith({
+  MainFeedState copyWith({
     bool? isLoading,
     String? errorMessage,
-    Post? post,
+    List<Post>? posts,
   }) {
-    return CreatePostState(
+    return MainFeedState(
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
-      post: post ?? this.post,
+      posts: posts ?? this.posts,
     );
   }
 
-  factory CreatePostState.initial() {
-    return const CreatePostState(
+  factory MainFeedState.initial() {
+    return const MainFeedState(
       isLoading: false,
       errorMessage: null,
-      post: null,
+      posts: null,
     );
   }
 }

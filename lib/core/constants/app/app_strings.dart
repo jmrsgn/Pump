@@ -44,10 +44,14 @@ class AppStrings {
   static const like = "Like";
   static const comment = "Comment";
   static const share = "Share";
+  static const noPostsAvailable = "No posts available";
 
   // Create Post Page
   static const createPost = "Create Post";
   static const whatsOnYourMind = "What's on your mind?";
+  static const titleAndDescriptionAreRequired =
+      "Title and description are required";
+  static const successfullyCreatedPost = "Successfully created post";
 
   // About Page
   static const about = "About";

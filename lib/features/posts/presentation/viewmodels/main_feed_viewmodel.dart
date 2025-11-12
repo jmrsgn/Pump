@@ -1,33 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pump/features/posts/domain/usecases/create_post_usecase.dart';
-import 'package:pump/features/posts/presentation/providers/create_post_state.dart';
+import 'package:pump/features/posts/domain/usecases/get_all_posts_usecase.dart';
+import 'package:pump/features/posts/presentation/providers/main_feed_state.dart';
 
 import '../../../../core/constants/app/app_strings.dart';
 import '../../../../core/utilities/logger_utility.dart';
 
-class CreatePostViewModel extends StateNotifier<CreatePostState> {
-  final CreatePostUseCase _createPostUseCase;
+class MainFeedViewmodel extends StateNotifier<MainFeedState> {
+  final GetAllPostsUseCase _getAllPostsUseCase;
 
-  CreatePostViewModel(this._createPostUseCase)
-    : super(CreatePostState.initial());
+  MainFeedViewmodel(this._getAllPostsUseCase) : super(MainFeedState.initial());
 
   void emitError(String errorMessage) async {
     state = state.copyWith(isLoading: false, errorMessage: errorMessage);
   }
 
-  Future<void> createPost(String title, String description) async {
+  Future<void> getAllPosts() async {
     // Reset state
     state = state.copyWith(isLoading: true, errorMessage: null);
 
-    if (title.trim().isEmpty || description.trim().isEmpty) {
-      emitError(AppStrings.titleAndDescriptionAreRequired);
-      return;
-    }
-
     try {
-      final response = await _createPostUseCase.execute(title, description);
+      final response = await _getAllPostsUseCase.execute();
       if (response.isSuccess) {
-        state = state.copyWith(isLoading: false, errorMessage: null);
+        state = state.copyWith(
+          isLoading: false,
+          posts: response.data,
+          errorMessage: null,
+        );
       } else {
         LoggerUtility.d(runtimeType.toString(), response.error);
         emitError(response.error!.message);

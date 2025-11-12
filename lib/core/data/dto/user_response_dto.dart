@@ -1,6 +1,7 @@
 import 'package:pump/core/domain/entities/user.dart';
 
 class UserResponse {
+  final String? id;
   final String? firstName;
   final String? lastName;
   final String? username;
@@ -10,6 +11,7 @@ class UserResponse {
   final String? profileImageUrl;
 
   UserResponse({
+    this.id,
     this.firstName,
     this.lastName,
     this.username,
@@ -21,6 +23,7 @@ class UserResponse {
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
     return UserResponse(
+      id: json['id'],
       firstName: json['firstName'],
       lastName: json['lastName'],
       username: json['username'],
@@ -33,6 +36,7 @@ class UserResponse {
 
   User toUser() {
     return User(
+      id: id ?? '',
       firstName: firstName ?? '',
       lastName: lastName ?? '',
       email: email ?? '',

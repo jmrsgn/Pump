@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump/features/posts/presentation/providers/create_post_state.dart';
+import 'package:pump/features/posts/presentation/providers/post_providers.dart';
 
 import '../../../../core/constants/app/app_dimens.dart';
 import '../../../../core/constants/app/app_strings.dart';
@@ -6,20 +9,47 @@ import '../../../../core/domain/entities/user.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
 import '../../../../core/presentation/theme/app_text_styles.dart';
 import '../../../../core/presentation/widgets/custom_scaffold.dart';
+import '../../../../core/routes.dart';
 import '../../../../core/utils/navigation_utils.dart';
 import '../../../../core/utils/ui_utils.dart';
 
-class CreatePostScreen extends StatelessWidget {
+class CreatePostScreen extends ConsumerStatefulWidget {
   final User currentUser;
 
   const CreatePostScreen({super.key, required this.currentUser});
 
   @override
+  ConsumerState<CreatePostScreen> createState() => _CreatePostScreenState();
+}
+
+class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
+  @override
   Widget build(BuildContext context) {
-    final _titleController = TextEditingController();
-    final _descriptionController = TextEditingController();
+    // Listeners
+    ref.listen<CreatePostState>(createPostViewModelProvider, (previous, next) {
+      if (previous?.isLoading == true && next.isLoading == false) {
+        if (next.errorMessage == null) {
+          if (!mounted) return;
+          UiUtils.showSnackBarSuccess(
+            context,
+            message: AppStrings.successfullyCreatedPost,
+          );
+          NavigationUtils.replaceWith(context, AppRoutes.mainFeed);
+        } else {
+          if (!mounted) return;
+          UiUtils.showSnackBarError(context, message: next.errorMessage!);
+        }
+      }
+    });
+
+    final createPostState = ref.watch(createPostViewModelProvider);
+    final createPostViewModel = ref.watch(createPostViewModelProvider.notifier);
+
+    final titleController = TextEditingController();
+    final descriptionController = TextEditingController();
 
     return CustomScaffold(
+      isLoading: createPostState.isLoading,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         leading: IconButton(
@@ -31,10 +61,9 @@ class CreatePostScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.send),
             onPressed: () {
-              // Handle post submission here
-              // TODO:
-              final title = _titleController.text.trim();
-              final description = _descriptionController.text.trim();
+              final title = titleController.text.trim();
+              final description = descriptionController.text.trim();
+              createPostViewModel.createPost(title, description);
             },
           ),
         ],
@@ -49,12 +78,12 @@ class CreatePostScreen extends StatelessWidget {
               // User info row
               Row(
                 children: [
-                  currentUser.profileImageUrl == null
+                  widget.currentUser.profileImageUrl == null
                       ? CircleAvatar(
                           backgroundColor: AppColors.primary,
                           radius: AppDimens.radiusL,
                           child: Text(
-                            currentUser.firstName[0],
+                            widget.currentUser.firstName[0],
                             style: AppTextStyles.body.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -62,13 +91,13 @@ class CreatePostScreen extends StatelessWidget {
                         )
                       : CircleAvatar(
                           backgroundImage: AssetImage(
-                            currentUser.profileImageUrl!,
+                            widget.currentUser.profileImageUrl!,
                           ),
                           radius: AppDimens.radiusL,
                         ),
                   UiUtils.addHorizontalSpaceS(),
                   Text(
-                    '${currentUser.firstName} ${currentUser.lastName}',
+                    '${widget.currentUser.firstName} ${widget.currentUser.lastName}',
                     style: AppTextStyles.body.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -80,7 +109,7 @@ class CreatePostScreen extends StatelessWidget {
 
               // Title TextField
               TextField(
-                controller: _titleController,
+                controller: titleController,
                 maxLines: 1,
                 decoration: InputDecoration(
                   hintText: AppStrings.whatsOnYourMind,
@@ -97,7 +126,7 @@ class CreatePostScreen extends StatelessWidget {
               // Description TextField
               Expanded(
                 child: TextField(
-                  controller: _descriptionController,
+                  controller: descriptionController,
                   maxLines: null,
                   expands: true,
                   textAlignVertical: TextAlignVertical.top,

@@ -4,15 +4,12 @@ import 'package:pump/features/posts/domain/entities/post.dart';
 import '../../../../core/data/dto/result.dart';
 import '../repositories/post_repository.dart';
 
-class CreatePostUseCase {
+class GetAllPostsUseCase {
   final PostRepository _postRepository;
 
-  CreatePostUseCase(this._postRepository);
+  GetAllPostsUseCase(this._postRepository);
 
-  Future<Result<Post, AppError>> execute(
-    String title,
-    String description,
-  ) async {
-    return await _postRepository.createPost(title, description);
+  Future<Result<List<Post>, AppError>> execute() async {
+    return await _postRepository.getAllPosts();
   }
 }

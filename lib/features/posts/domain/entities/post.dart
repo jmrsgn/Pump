@@ -1,7 +1,7 @@
 class Post {
   final String id;
   final String title;
-  final String? description;
+  final String description;
   final String userId;
   final String userName;
   final String? userProfileImageUrl;

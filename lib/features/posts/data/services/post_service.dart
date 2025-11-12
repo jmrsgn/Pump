@@ -7,6 +7,7 @@ import 'package:pump/core/constants/app/app_strings.dart';
 import 'package:pump/core/data/dto/api_error_response.dart';
 import 'package:pump/core/data/dto/result.dart';
 
+import '../../../../core/utilities/logger_utility.dart';
 import '../dto/create_post_request_dto.dart';
 import '../dto/post_response_dto.dart';
 
@@ -50,32 +51,38 @@ class PostService {
   /// @param request: CreatePostRequest
   /// returns: Result<PostResponse, ApiErrorResponse>
   Future<Result<PostResponse, ApiErrorResponse>> createPost(
+    String token,
     CreatePostRequest request,
   ) async {
     try {
       final response = await http.post(
         Uri.parse(ApiConstants.postUrl),
-        headers: ApiConstants.headerType,
+        headers: {...ApiConstants.headerType, 'Authorization': 'Bearer $token'},
         body: jsonEncode(request.toJson()),
       );
 
-      final jsonBody = jsonDecode(response.body);
+      final json = jsonDecode(response.body);
 
       if (response.statusCode == HttpStatus.ok ||
           response.statusCode == HttpStatus.created) {
-        return Result.success(PostResponse.fromJson(jsonBody['data']));
+        return Result.success(PostResponse.fromJson(json['data']));
       } else {
-        final error = ApiErrorResponse.fromJson(jsonBody['error']);
+        final error = ApiErrorResponse.fromJson(json['error']);
         return Result.failure(error);
       }
-    } catch (e) {
-      return Result.failure(
-        ApiErrorResponse(
-          status: HttpStatus.internalServerError,
-          error: AppStrings.internalServerError,
-          message: e.toString(),
-        ),
+    } catch (e, stackTrace) {
+      LoggerUtility.e(
+        runtimeType.toString(),
+        AppStrings.anUnexpectedErrorOccurred,
+        e.toString(),
+        stackTrace,
       );
+      final apiErrorResponse = ApiErrorResponse(
+        status: HttpStatus.internalServerError,
+        error: AppStrings.anUnexpectedErrorOccurred,
+        message: '${AppStrings.anUnexpectedErrorOccurred}: $e',
+      );
+      return Result.failure(apiErrorResponse);
     }
   }
 }

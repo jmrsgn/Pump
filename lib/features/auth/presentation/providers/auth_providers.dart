@@ -9,36 +9,37 @@ import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../viewmodels/login_viewmodel.dart';
 
-// Service
 final authServiceProvider = Provider<AuthService>((ref) => AuthService());
 
-// Repository
-final authRepositoryProvider = Provider<AuthRepositoryImpl>((ref) {
-  return AuthRepositoryImpl(ref.watch(authServiceProvider));
-});
+final authRepositoryProvider = Provider<AuthRepositoryImpl>(
+  (ref) => AuthRepositoryImpl(ref.watch(authServiceProvider)),
+);
 
-// Login ViewModel
+final loginUseCaseProvider = Provider<LoginUseCase>(
+  (ref) => LoginUseCase(ref.watch(authRepositoryProvider)),
+);
+
+final registerUseCaseProvider = Provider<RegisterUseCase>(
+  (ref) => RegisterUseCase(ref.watch(authRepositoryProvider)),
+);
+
+final logoutUseCaseProvider = Provider<LogoutUseCase>(
+  (ref) => LogoutUseCase(ref.watch(authRepositoryProvider)),
+);
+
 final loginViewModelProvider = StateNotifierProvider<LoginViewModel, UiState>((
   ref,
 ) {
-  final repository = ref.watch(authRepositoryProvider);
-  final loginUseCase = LoginUseCase(repository);
-  return LoginViewModel(loginUseCase);
+  return LoginViewModel(ref.watch(loginUseCaseProvider));
 });
 
-// Register ViewModel
 final registerViewModelProvider =
     StateNotifierProvider<RegisterViewmodel, UiState>((ref) {
-      final repository = ref.watch(authRepositoryProvider);
-      final registerUseCase = RegisterUseCase(repository);
-      return RegisterViewmodel(registerUseCase);
+      return RegisterViewmodel(ref.watch(registerUseCaseProvider));
     });
 
-// Logout ViewModel
 final logoutViewModelProvider = StateNotifierProvider<LogoutViewmodel, UiState>(
   (ref) {
-    final repository = ref.watch(authRepositoryProvider);
-    final logoutUseCase = LogoutUseCase(repository);
-    return LogoutViewmodel(logoutUseCase);
+    return LogoutViewmodel(ref.watch(logoutUseCaseProvider));
   },
 );

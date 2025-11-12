@@ -6,7 +6,7 @@ class SecureStorage {
   factory SecureStorage() => _instance;
   SecureStorage._internal();
   static const _tokenKey = 'jwt_token';
-  static const _currentLoggedInUserEmailKey = 'current_logged_in_user_email';
+  static const _currentLoggedInUserId = 'current_logged_in_user_id';
 
   final FlutterSecureStorage _storage = const FlutterSecureStorage(
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
@@ -24,15 +24,15 @@ class SecureStorage {
     await _storage.delete(key: _tokenKey);
   }
 
-  Future<void> saveCurrentLoggedInUserEmail(String userEmail) async {
-    await _storage.write(key: _currentLoggedInUserEmailKey, value: userEmail);
+  Future<void> saveCurrentLoggedInUserId(String userId) async {
+    await _storage.write(key: _currentLoggedInUserId, value: userId);
   }
 
-  Future<String?> getCurrentLoggedInUserEmail() async {
-    return await _storage.read(key: _currentLoggedInUserEmailKey);
+  Future<String?> getCurrentLoggedInUserId() async {
+    return await _storage.read(key: _currentLoggedInUserId);
   }
 
-  Future<void> deleteCurrentLoggedInUserEmail() async {
-    await _storage.delete(key: _currentLoggedInUserEmailKey);
+  Future<void> deleteCurrentLoggedInUserId() async {
+    await _storage.delete(key: _currentLoggedInUserId);
   }
 }

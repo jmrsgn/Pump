@@ -1,6 +1,7 @@
 import '../../../../core/data/models/user_entity.dart';
 
 class User {
+  final String id;
   final String firstName;
   final String lastName;
   final String email;
@@ -9,6 +10,7 @@ class User {
   final String? profileImageUrl;
 
   User({
+    required this.id,
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -19,13 +21,14 @@ class User {
 
   @override
   String toString() {
-    return 'User{firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, role: $role, profileImageUrl: $profileImageUrl}';
+    return 'User{id: $id, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, role: $role, profileImageUrl: $profileImageUrl}';
   }
 }
 
 extension UserMapper on User {
   UserEntity toEntity() {
     return UserEntity(
+      id: id,
       email: email,
       firstName: firstName,
       lastName: lastName,
@@ -39,6 +42,7 @@ extension UserMapper on User {
 extension UserEntityMapper on UserEntity {
   User toUser() {
     return User(
+      id: id,
       firstName: firstName,
       lastName: lastName,
       email: email,

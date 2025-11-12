@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump/core/constants/app/app_strings.dart';
 import 'package:pump/core/presentation/providers/user_providers.dart';
 import 'package:pump/core/routes.dart';
 import 'package:pump/core/utils/navigation_utils.dart';
+import 'package:pump/features/posts/presentation/providers/post_providers.dart';
 import 'package:pump/features/posts/presentation/widgets/post_widget.dart';
-import '../../../../core/constants/app/app_strings.dart';
 import '../../../../core/presentation/theme/app_colors.dart';
+import '../../../../core/presentation/theme/app_text_styles.dart';
 import '../../../../core/presentation/widgets/app_drawer.dart';
 import '../../../../core/presentation/widgets/custom_scaffold.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
@@ -23,6 +25,7 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
     super.initState();
     Future.microtask(() {
       ref.read(userViewModelProvider.notifier).initializeCurrentUser();
+      ref.read(mainFeedViewModelProvider.notifier).getAllPosts();
     });
   }
 
@@ -30,9 +33,10 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
   Widget build(BuildContext context) {
     final logoutViewModel = ref.watch(logoutViewModelProvider.notifier);
     final userState = ref.watch(userViewModelProvider);
+    final mainFeedState = ref.watch(mainFeedViewModelProvider);
 
     return CustomScaffold(
-      isLoading: userState.isLoading,
+      isLoading: userState.isLoading || mainFeedState.isLoading,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         leading: Builder(
@@ -58,28 +62,40 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
               },
               selectedRoute: AppRoutes.mainFeed,
             ),
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, index) {
-          return PostWidget(
-            description: AppStrings.placeholderParagraph2,
-            author: 'John Martin Marasigan',
-            authorImageUrl: 'assets/images/jm.jpg',
-            datePosted: '10/08/25',
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          NavigationUtils.navigateTo(
-            context,
-            AppRoutes.createPost,
-            arguments: userState.user,
-          );
-        },
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add),
-      ),
+      body: mainFeedState.posts != null && mainFeedState.posts!.isNotEmpty
+          ? ListView.builder(
+              itemCount: mainFeedState.posts!.length,
+              itemBuilder: (context, index) {
+                final post = mainFeedState.posts![index];
+                return PostWidget(
+                  description: post.description,
+                  author: post.userName,
+                  userProfileImageUrl: post.userProfileImageUrl,
+                  datePosted: "",
+                );
+              },
+            )
+          : Center(
+              child: Text(
+                AppStrings.noPostsAvailable,
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.textDisabled,
+                ),
+              ),
+            ),
+      floatingActionButton: userState.user != null
+          ? FloatingActionButton(
+              onPressed: () {
+                NavigationUtils.navigateTo(
+                  context,
+                  AppRoutes.createPost,
+                  arguments: userState.user,
+                );
+              },
+              backgroundColor: AppColors.primary,
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 }

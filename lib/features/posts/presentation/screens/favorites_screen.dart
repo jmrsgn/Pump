@@ -29,7 +29,7 @@ class FavoritesScreen extends StatelessWidget {
           return PostWidget(
             description: "Mga nalike ni Em",
             author: 'John Martin Marasigan',
-            authorImageUrl: 'assets/images/jm.jpg',
+            userProfileImageUrl: 'assets/images/jm.jpg',
             datePosted: '10/08/25',
             isLiked: true,
           );

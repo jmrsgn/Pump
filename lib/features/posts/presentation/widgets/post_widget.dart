@@ -8,7 +8,7 @@ import '../../../../core/presentation/theme/app_text_styles.dart';
 class PostWidget extends StatelessWidget {
   final String description;
   final String author;
-  final String authorImageUrl;
+  final String? userProfileImageUrl;
   final String datePosted;
   final String? postImageUrl;
   final bool isLiked;
@@ -17,7 +17,7 @@ class PostWidget extends StatelessWidget {
     super.key,
     required this.description,
     required this.author,
-    required this.authorImageUrl,
+    required this.userProfileImageUrl,
     required this.datePosted,
     this.postImageUrl,
     this.isLiked = false,
@@ -40,10 +40,21 @@ class PostWidget extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CircleAvatar(
-                    radius: AppDimens.radiusL,
-                    backgroundImage: AssetImage("assets/images/jm.jpg"),
-                  ),
+                  userProfileImageUrl == null || userProfileImageUrl!.isEmpty
+                      ? CircleAvatar(
+                          backgroundColor: AppColors.primary,
+                          radius: AppDimens.radiusL,
+                          child: Text(
+                            author[0],
+                            style: AppTextStyles.body.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                      : CircleAvatar(
+                          backgroundImage: AssetImage(userProfileImageUrl!),
+                          radius: AppDimens.radiusL,
+                        ),
 
                   UiUtils.addHorizontalSpaceM(),
 

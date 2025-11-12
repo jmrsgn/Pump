@@ -6,5 +6,5 @@ import '../../../../core/data/dto/result.dart';
 abstract class PostRepository {
   Future<Result<List<Post>, AppError>> getAllPosts();
 
-  Future<Result<Post, AppError>> createPost(Map<String, dynamic> post);
+  Future<Result<Post, AppError>> createPost(String title, String description);
 }
