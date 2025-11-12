@@ -32,7 +32,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<UiState>(authViewModelProvider, (previous, next) {
+    ref.listen<UiState>(registerViewModelProvider, (previous, next) {
       if (previous?.isLoading == true && next.isLoading == false) {
         if (next.errorMessage == null) {
           if (!mounted) return;
@@ -48,13 +48,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       }
     });
 
-    final authState = ref.watch(authViewModelProvider);
-    final authViewModel = ref.read(authViewModelProvider.notifier);
+    final uiState = ref.watch(registerViewModelProvider);
+    final registerViewModel = ref.read(registerViewModelProvider.notifier);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: CustomScaffold(
-        isLoading: authState.isLoading,
+        isLoading: uiState.isLoading,
         appBar: AppBar(
           backgroundColor: AppColors.primary,
           leading: IconButton(
@@ -145,7 +145,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       width: AppDimens.buttonMediumWidth,
                       child: ElevatedButton(
                         style: AppButtonStyles.normal,
-                        onPressed: authState.isLoading
+                        onPressed: uiState.isLoading
                             ? null
                             : () {
                                 final firstName = _firstNameController.text;
@@ -156,7 +156,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 final password = _passwordController.text;
 
                                 // Just call register, UI reacts via ref.listen
-                                authViewModel.register(
+                                registerViewModel.register(
                                   firstName,
                                   lastName,
                                   email,

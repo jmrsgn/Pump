@@ -4,7 +4,7 @@
 // import '../../data/services/auth_service.dart';
 // import '../../domain/usecases/login_usecase.dart';
 // import '../../domain/usecases/register_usecase.dart';
-// import '../viewmodels/auth_viewmodel.dart';
+// import '../viewmodels/login_viewmodel.dart';
 // import 'auth_state.dart';
 //
 // // AuthService provider

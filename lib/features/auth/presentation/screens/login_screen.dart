@@ -30,7 +30,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     // Listeners
-    ref.listen<UiState>(authViewModelProvider, (previous, next) {
+    ref.listen<UiState>(loginViewModelProvider, (previous, next) {
       if (previous?.isLoading == true && next.isLoading == false) {
         if (next.errorMessage == null) {
           if (!mounted) return;
@@ -46,13 +46,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       }
     });
 
-    final authState = ref.watch(authViewModelProvider);
-    final authViewModel = ref.watch(authViewModelProvider.notifier);
+    final uiState = ref.watch(loginViewModelProvider);
+    final loginViewModel = ref.watch(loginViewModelProvider.notifier);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: CustomScaffold(
-        isLoading: authState.isLoading,
+        isLoading: uiState.isLoading,
         body: Stack(
           fit: StackFit.expand,
           alignment: Alignment.center,
@@ -103,13 +103,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         width: AppDimens.buttonSmallWidth,
                         child: ElevatedButton(
                           style: AppButtonStyles.normal,
-                          onPressed: authState.isLoading
+                          onPressed: uiState.isLoading
                               ? null
                               : () {
                                   final email = _emailController.text.trim();
                                   final password = _passwordController.text
                                       .trim();
-                                  authViewModel.login(email, password);
+                                  loginViewModel.login(email, password);
                                   // No need to check authState here — ref.listen handles it
                                 },
                           child: const Text(AppStrings.login),

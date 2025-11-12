@@ -28,7 +28,7 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = ref.watch(authViewModelProvider.notifier);
+    final logoutViewModel = ref.watch(logoutViewModelProvider.notifier);
     final userState = ref.watch(userViewModelProvider);
 
     return CustomScaffold(
@@ -51,7 +51,7 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
           : AppDrawer(
               currentUser: userState.user!,
               onSignOut: () async {
-                await authViewModel.logout();
+                await logoutViewModel.logout();
                 if (context.mounted) {
                   NavigationUtils.replaceWith(context, AppRoutes.login);
                 }
@@ -71,7 +71,11 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          NavigationUtils.navigateTo(context, AppRoutes.createPost, arguments: userState.user);
+          NavigationUtils.navigateTo(
+            context,
+            AppRoutes.createPost,
+            arguments: userState.user,
+          );
         },
         backgroundColor: AppColors.primary,
         child: const Icon(Icons.add),
