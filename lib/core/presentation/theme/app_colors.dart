@@ -10,7 +10,7 @@ class AppColors {
 
   // Backgrounds & Surfaces
   static const Color background = Color(0xFF0D0D0D); // App background
-  static const Color surface = Color(0xFF1A1A1A); // Card/AppBar surfaces
+  static const Color surface = Color(0xFF151515); // Card/AppBar surfaces
   static const Color surfaceLight = Color(
     0xFF1C1C1C,
   ); // Slightly lighter surface

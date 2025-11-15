@@ -23,18 +23,7 @@ class FavoritesScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: AppColors.background,
-      body: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return PostWidget(
-            description: "Mga nalike ni Em",
-            author: 'John Martin Marasigan',
-            userProfileImageUrl: 'assets/images/jm.jpg',
-            datePosted: '10/08/25',
-            isLiked: true,
-          );
-        },
-      ),
+      body: Center(child: Text("Hello")),
     );
   }
 }

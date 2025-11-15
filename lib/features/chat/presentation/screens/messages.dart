@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pump/core/presentation/widgets/app_text_input.dart';
 import 'package:pump/core/utils/ui_utils.dart';
 import 'package:pump/features/chat/domain/entities/message.dart';
 
@@ -47,7 +48,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
   }
 
-  void _sendMessage(String text) {
+  void _sendMessage() {
+    final text = _textController.text;
     if (text.trim().isEmpty) return;
 
     final message = Message(
@@ -153,8 +155,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
               ),
             ),
           ),
-          // input area
-          _MessageInput(
+
+          // Text Input
+          AppTextInput(
             controller: _textController,
             onSend: _sendMessage,
             onAttach: () {
@@ -162,109 +165,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _MessageInput extends StatefulWidget {
-  final TextEditingController controller;
-  final ValueChanged<String> onSend;
-  final VoidCallback onAttach;
-
-  const _MessageInput({
-    required this.controller,
-    required this.onSend,
-    required this.onAttach,
-  });
-
-  @override
-  State<_MessageInput> createState() => _MessageInputState();
-}
-
-class _MessageInputState extends State<_MessageInput> {
-  bool _canSend = false;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(_onTextChanged);
-  }
-
-  void _onTextChanged() {
-    final hasText = widget.controller.text.trim().isNotEmpty;
-    if (hasText != _canSend) setState(() => _canSend = hasText);
-  }
-
-  @override
-  void dispose() {
-    widget.controller.removeListener(_onTextChanged);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Container(
-        color: Colors.black26,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: Row(
-          children: [
-            IconButton(
-              onPressed: widget.onAttach,
-              icon: const Icon(Icons.attach_file, color: Colors.white70),
-            ),
-            Expanded(
-              child: TextField(
-                controller: widget.controller,
-                maxLines: 5,
-                minLines: 1,
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                  isDense: true,
-                  filled: true,
-                  fillColor: Colors.white12,
-                  hintText: 'Type a message',
-                  hintStyle: const TextStyle(color: Colors.white54),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                ),
-                style: const TextStyle(color: Colors.white),
-                onSubmitted: (v) {
-                  if (v.trim().isNotEmpty) {
-                    widget.onSend(v);
-                  }
-                },
-              ),
-            ),
-            UiUtils.addHorizontalSpaceS(),
-            InkWell(
-              onTap: _canSend
-                  ? () => widget.onSend(widget.controller.text)
-                  : null,
-              borderRadius: BorderRadius.circular(24),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: _canSend ? AppColors.primary : Colors.white12,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  _canSend ? Icons.send : Icons.mic,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

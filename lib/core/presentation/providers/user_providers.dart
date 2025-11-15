@@ -11,7 +11,7 @@ final userServiceProvider = Provider<UserService>((ref) => UserService());
 
 // Repository
 final userRepositoryProvider = Provider<UserRepositoryImpl>((ref) {
-  return UserRepositoryImpl(ref.watch(userServiceProvider));
+  return UserRepositoryImpl();
 });
 
 // ViewModel

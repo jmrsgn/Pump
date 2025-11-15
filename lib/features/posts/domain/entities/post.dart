@@ -53,7 +53,7 @@ class Post {
 
 class Comment {
   final String userName;
-  final String userProfileImageUrl;
+  final String? userProfileImageUrl;
   final String comment;
   final int likesCount;
 

@@ -34,6 +34,19 @@ class UserResponse {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'firstName': firstName,
+      'lastName': lastName,
+      'username': username,
+      'email': email,
+      'phone': phone,
+      'role': role,
+      'profileImageUrl': profileImageUrl,
+    };
+  }
+
   User toUser() {
     return User(
       id: id ?? '',

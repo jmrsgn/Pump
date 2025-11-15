@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:pump/core/data/dto/api_error_response.dart';
 import 'package:pump/core/errors/app_error.dart';
 import 'package:pump/core/utilities/logger_utility.dart';
@@ -14,9 +16,10 @@ import '../services/auth_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthService _authService;
-  final SecureStorage _secureStorage = SecureStorage();
+  final SecureStorage _secureStorage;
 
-  AuthRepositoryImpl(this._authService);
+  AuthRepositoryImpl(this._authService, {SecureStorage? secureStorage})
+    : _secureStorage = secureStorage ?? SecureStorage();
 
   @override
   Future<Result<AuthResponse, AppError>> login(LoginRequest request) async {
@@ -30,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
 
     final UserResponse userResponse = result.data!.userResponse!;
-    await _secureStorage.saveCurrentLoggedInUserId(userResponse.id!);
+    await _secureStorage.saveCurrentLoggedInUser(userResponse.toUser());
 
     if (result.isSuccess) {
       return Result.success(result.data!);
@@ -72,7 +75,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    await _secureStorage.deleteCurrentLoggedInUserId();
+    await _secureStorage.deleteCurrentLoggedInUser();
     await _secureStorage.deleteToken();
   }
 }

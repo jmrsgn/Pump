@@ -9,7 +9,9 @@ import 'package:pump/features/info/presentation/screens/contact.dart';
 import 'package:pump/features/info/presentation/screens/feedback.dart';
 import 'package:pump/features/posts/presentation/screens/create_post_screen.dart';
 import 'package:pump/features/posts/presentation/screens/favorites_screen.dart';
+import 'package:pump/features/posts/presentation/screens/post_info_screen.dart';
 import '../features/info/presentation/screens/about.dart';
+import '../features/posts/domain/entities/post.dart';
 import '../features/posts/presentation/screens/main_feed_screen.dart';
 import '../features/profile/presentation/screens/user_profile.dart';
 import 'domain/entities/user.dart';
@@ -25,6 +27,7 @@ class AppRoutes {
   static const String mainFeed = '/main_feed';
   static const String favorites = '/favorites';
   static const String createPost = '/create_post';
+  static const String postInfo = '/post_info';
 
   // User
   static const String userProfile = '/user_profile';
@@ -35,23 +38,35 @@ class AppRoutes {
   static const String feedback = '/feedback';
   static const String about = '/about';
 
-  // Only check User type arg
-  static Widget _buildUserScreen(
-    RouteSettings settings,
-    Widget Function(User) builder,
-  ) {
+  // ----------------- Helper Methods -----------------
+
+  /// Safely extract a User argument from RouteSettings
+  static User? extractUserArg(RouteSettings settings) {
     final args = settings.arguments;
-    if (args is! User) {
-      LoggerUtility.e(
-        "AppRoutes",
-        AppStrings.routeError,
-        "Route ${settings.name} requires a User argument, got: ${args?.runtimeType}",
-      );
-      return InvalidRouteScreen();
-    }
-    return builder(args);
+    if (args is User) return args;
+
+    LoggerUtility.e(
+      "AppRoutes",
+      AppStrings.routeError,
+      "Route ${settings.name} requires a User argument, got: ${args?.runtimeType}",
+    );
+    return null;
   }
 
+  /// Safely extract a Post argument from RouteSettings
+  static Post? extractPostArg(RouteSettings settings) {
+    final args = settings.arguments;
+    if (args is Post) return args;
+
+    LoggerUtility.e(
+      "AppRoutes",
+      AppStrings.routeError,
+      "Route ${settings.name} requires a Post argument, got: ${args?.runtimeType}",
+    );
+    return null;
+  }
+
+  // ----------------- Route Generator -----------------
   static Route<dynamic> generateRoute(RouteSettings settings) {
     try {
       switch (settings.name) {
@@ -63,20 +78,32 @@ class AppRoutes {
           return MaterialPageRoute(builder: (_) => MainFeedScreen());
         case favorites:
           return MaterialPageRoute(builder: (_) => const FavoritesScreen());
+
         case createPost:
+          final user = extractUserArg(settings);
+          if (user == null) {
+            return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
+          }
           return MaterialPageRoute(
-            builder: (_) => _buildUserScreen(
-              settings,
-              (user) => CreatePostScreen(currentUser: user),
-            ),
+            builder: (_) => CreatePostScreen(currentUser: user),
           );
+
+        case postInfo:
+          final post = extractPostArg(settings);
+          if (post == null) {
+            return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
+          }
+          return MaterialPageRoute(builder: (_) => PostInfoScreen(post: post));
+
         case userProfile:
+          final user = extractUserArg(settings);
+          if (user == null) {
+            return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
+          }
           return MaterialPageRoute(
-            builder: (_) => _buildUserScreen(
-              settings,
-              (user) => UserProfileScreen(currentUser: user),
-            ),
+            builder: (_) => UserProfileScreen(currentUser: user),
           );
+
         case messages:
           return MaterialPageRoute(
             builder: (_) =>
@@ -88,6 +115,7 @@ class AppRoutes {
           return MaterialPageRoute(builder: (_) => const FeedbackScreen());
         case about:
           return MaterialPageRoute(builder: (_) => const AboutScreen());
+
         default:
           return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
       }

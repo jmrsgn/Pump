@@ -17,7 +17,7 @@ class UserViewModel extends StateNotifier<UserState> {
     if (result.isSuccess) {
       state = state.copyWith(
         isLoading: false,
-        user: result.data,
+        user: result.data?.user,
         errorMessage: null,
       );
     } else {

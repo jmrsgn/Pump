@@ -66,12 +66,13 @@ class _MainFeedScreenState extends ConsumerState<MainFeedScreen> {
           ? ListView.builder(
               itemCount: mainFeedState.posts!.length,
               itemBuilder: (context, index) {
-                final post = mainFeedState.posts![index];
                 return PostWidget(
-                  description: post.description,
-                  author: post.userName,
-                  userProfileImageUrl: post.userProfileImageUrl,
-                  datePosted: "",
+                  post: mainFeedState.posts![index],
+                  onTap: () => NavigationUtils.navigateTo(
+                    context,
+                    AppRoutes.postInfo,
+                    arguments: mainFeedState.posts![index],
+                  ),
                 );
               },
             )

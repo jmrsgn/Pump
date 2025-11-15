@@ -11,36 +11,36 @@ import '../dto/api_error_response.dart';
 import '../dto/result.dart';
 
 class UserService {
-  Future<Result<UserResponse, ApiErrorResponse>> getCurrentUser(
-    String token,
-  ) async {
-    try {
-      final response = await http.get(
-        Uri.parse(ApiConstants.profileUrl),
-        headers: {...ApiConstants.headerType, 'Authorization': 'Bearer $token'},
-      );
-
-      final json = jsonDecode(response.body);
-
-      if (response.statusCode == HttpStatus.ok ||
-          response.statusCode == HttpStatus.created) {
-        return Result.success(UserResponse.fromJson(json['data']));
-      } else {
-        return Result.failure(ApiErrorResponse.fromJson(json['error']));
-      }
-    } catch (e, stackTrace) {
-      LoggerUtility.e(
-        runtimeType.toString(),
-        AppStrings.anUnexpectedErrorOccurred,
-        e.toString(),
-        stackTrace,
-      );
-      final apiErrorResponse = ApiErrorResponse(
-        status: HttpStatus.internalServerError,
-        error: AppStrings.anUnexpectedErrorOccurred,
-        message: '${AppStrings.anUnexpectedErrorOccurred}: $e',
-      );
-      return Result.failure(apiErrorResponse);
-    }
-  }
+  // Future<Result<UserResponse, ApiErrorResponse>> getCurrentUser(
+  //   String token,
+  // ) async {
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse(ApiConstants.profileUrl),
+  //       headers: {...ApiConstants.headerType, 'Authorization': 'Bearer $token'},
+  //     );
+  //
+  //     final json = jsonDecode(response.body);
+  //
+  //     if (response.statusCode == HttpStatus.ok ||
+  //         response.statusCode == HttpStatus.created) {
+  //       return Result.success(UserResponse.fromJson(json['data']));
+  //     } else {
+  //       return Result.failure(ApiErrorResponse.fromJson(json['error']));
+  //     }
+  //   } catch (e, stackTrace) {
+  //     LoggerUtility.e(
+  //       runtimeType.toString(),
+  //       AppStrings.anUnexpectedErrorOccurred,
+  //       e.toString(),
+  //       stackTrace,
+  //     );
+  //     final apiErrorResponse = ApiErrorResponse(
+  //       status: HttpStatus.internalServerError,
+  //       error: AppStrings.anUnexpectedErrorOccurred,
+  //       message: '${AppStrings.anUnexpectedErrorOccurred}: $e',
+  //     );
+  //     return Result.failure(apiErrorResponse);
+  //   }
+  // }
 }

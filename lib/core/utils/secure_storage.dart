@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:pump/core/domain/entities/user.dart';
 
 class SecureStorage {
   // Singleton instance
@@ -6,7 +9,7 @@ class SecureStorage {
   factory SecureStorage() => _instance;
   SecureStorage._internal();
   static const _tokenKey = 'jwt_token';
-  static const _currentLoggedInUserId = 'current_logged_in_user_id';
+  static const _currentLoggedInUser = 'current_logged_in_user';
 
   final FlutterSecureStorage _storage = const FlutterSecureStorage(
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
@@ -24,15 +27,22 @@ class SecureStorage {
     await _storage.delete(key: _tokenKey);
   }
 
-  Future<void> saveCurrentLoggedInUserId(String userId) async {
-    await _storage.write(key: _currentLoggedInUserId, value: userId);
+  Future<void> saveCurrentLoggedInUser(User user) async {
+    final userJson = jsonEncode(user.toJson());
+    await _storage.write(key: _currentLoggedInUser, value: userJson);
   }
 
-  Future<String?> getCurrentLoggedInUserId() async {
-    return await _storage.read(key: _currentLoggedInUserId);
+  Future<User?> getCurrentLoggedInUser() async {
+    final userJson = await _storage.read(key: _currentLoggedInUser);
+    if (userJson == null) {
+      return null;
+    }
+
+    final Map<String, dynamic> jsonMap = jsonDecode(userJson);
+    return User.fromJson(jsonMap);
   }
 
-  Future<void> deleteCurrentLoggedInUserId() async {
-    await _storage.delete(key: _currentLoggedInUserId);
+  Future<void> deleteCurrentLoggedInUser() async {
+    await _storage.delete(key: _currentLoggedInUser);
   }
 }

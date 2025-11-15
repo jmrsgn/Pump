@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pump/core/presentation/providers/user_providers.dart';
 import 'package:pump/features/posts/data/services/post_service.dart';
 import 'package:pump/features/posts/domain/usecases/create_post_usecase.dart';
 import 'package:pump/features/posts/domain/usecases/get_all_posts_usecase.dart';
@@ -11,7 +12,10 @@ import '../../data/repositories/post_repository_impl.dart';
 final postServiceProvider = Provider<PostService>((ref) => PostService());
 
 final postRepositoryProvider = Provider<PostRepositoryImpl>(
-  (ref) => PostRepositoryImpl(ref.watch(postServiceProvider)),
+  (ref) => PostRepositoryImpl(
+    ref.watch(postServiceProvider),
+    ref.watch(userRepositoryProvider),
+  ),
 );
 
 // Create Post

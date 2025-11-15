@@ -1,6 +1,5 @@
 import 'package:pump/core/constants/app/app_strings.dart';
-import 'package:pump/core/data/services/user_service.dart';
-import 'package:pump/core/domain/entities/user.dart';
+import 'package:pump/core/domain/entities/authenticated_user.dart';
 import 'package:pump/core/errors/app_error.dart';
 import 'package:pump/core/utilities/logger_utility.dart';
 import 'package:pump/core/utils/secure_storage.dart';
@@ -9,15 +8,16 @@ import 'package:pump/core/data/dto/result.dart';
 import '../../domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl extends UserRepository {
-  final UserService _userService;
   final SecureStorage _secureStorage;
 
-  UserRepositoryImpl(this._userService, {SecureStorage? secureStorage})
+  UserRepositoryImpl({SecureStorage? secureStorage})
     : _secureStorage = secureStorage ?? SecureStorage();
 
   @override
-  Future<Result<User, AppError>> getCurrentUser() async {
+  Future<Result<AuthenticatedUser, AppError>>
+  getAuthenticatedCurrentUser() async {
     try {
+      // Check for the token
       final token = await _secureStorage.getToken();
       if (token == null || token.isEmpty) {
         LoggerUtility.e(
@@ -32,22 +32,18 @@ class UserRepositoryImpl extends UserRepository {
         );
       }
 
-      final result = await _userService.getCurrentUser(token);
-
-      if (result.isSuccess && result.data != null) {
-        LoggerUtility.v(
-          runtimeType.toString(),
-          'User fetched: ${result.data!.toUser()}',
+      // Check for stored user
+      final user = await _secureStorage.getCurrentLoggedInUser();
+      if (user == null) {
+        LoggerUtility.e(runtimeType.toString(), "User is missing");
+        return Result.failure(
+          AppError(
+            error: AppStrings.userIsNotAuthenticated,
+            message: AppStrings.userIsNotAuthenticated,
+          ),
         );
-        return Result.success(result.data!.toUser());
       }
-
-      return Result.failure(
-        AppError(
-          error: result.error?.error ?? AppStrings.unknownError,
-          message: result.error?.message ?? AppStrings.failedToFetchUserData,
-        ),
-      );
+      return Result.success(AuthenticatedUser(user: user, token: token));
     } catch (e, stackTrace) {
       LoggerUtility.e(
         runtimeType.toString(),

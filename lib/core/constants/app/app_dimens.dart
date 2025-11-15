@@ -1,4 +1,6 @@
 class AppDimens {
+  AppDimens._();
+
   static const double dimen4 = 4.0;
   static const double dimen8 = 8.0;
   static const double dimen10 = 1.0;

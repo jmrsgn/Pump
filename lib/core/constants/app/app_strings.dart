@@ -18,6 +18,12 @@ class AppStrings {
   static const failedToFetchUserData = "Failed to fetch user data";
   static const internalServerError = "Internal server error";
   static const routeError = "Route error";
+  static const likes = "likes";
+  static const comments = "comments";
+  static const shares = "shares";
+  static const like = "Like";
+  static const reply = "Reply";
+  static const typeAMessage = "Type a message";
 
   // Login Page
   static const login = 'Login';
@@ -41,7 +47,6 @@ class AppStrings {
   static const phPhonePrefix = "+63";
 
   // Main Feed Page
-  static const like = "Like";
   static const comment = "Comment";
   static const share = "Share";
   static const noPostsAvailable = "No posts available";
