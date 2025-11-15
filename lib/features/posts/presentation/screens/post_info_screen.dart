@@ -66,204 +66,210 @@ class _PostInfoScreenState extends ConsumerState<PostInfoScreen>
   Widget build(BuildContext context) {
     final relativeTime = TimeUtils.timeAgo(widget.post.createdAt);
 
-    return CustomScaffold(
-      backgroundColor: AppColors.surface,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textOnPrimary),
-          onPressed: () {
-            NavigationUtils.handleBackNavigation(context);
-          },
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: CustomScaffold(
+        backgroundColor: AppColors.surface,
+        appBar: AppBar(
+          backgroundColor: AppColors.primary,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: AppColors.textOnPrimary),
+            onPressed: () {
+              NavigationUtils.handleBackNavigation(context);
+            },
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          // Scrollable content
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(AppDimens.spaceS),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header user info
-                  Container(
-                    padding: const EdgeInsets.all(AppDimens.spaceXS),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        widget.post.userProfileImageUrl == null ||
-                                widget.post.userProfileImageUrl!.isEmpty
-                            ? CircleAvatar(
-                                backgroundColor: AppColors.primary,
-                                radius: AppDimens.radiusL,
-                                child: Text(
-                                  widget.post.userName[0],
+        body: Column(
+          children: [
+            // Scrollable content
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(AppDimens.spaceS),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header user info
+                    Container(
+                      padding: const EdgeInsets.all(AppDimens.spaceXS),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          widget.post.userProfileImageUrl == null ||
+                                  widget.post.userProfileImageUrl!.isEmpty
+                              ? CircleAvatar(
+                                  backgroundColor: AppColors.primary,
+                                  radius: AppDimens.radiusL,
+                                  child: Text(
+                                    widget.post.userName[0],
+                                    style: AppTextStyles.body.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                    widget.post.userProfileImageUrl!,
+                                  ),
+                                  radius: AppDimens.radiusL,
+                                ),
+                          UiUtils.addHorizontalSpaceM(),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.post.userName,
                                   style: AppTextStyles.body.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              )
-                            : CircleAvatar(
-                                backgroundImage: AssetImage(
-                                  widget.post.userProfileImageUrl!,
+                                Text(
+                                  relativeTime,
+                                  style: AppTextStyles.caption.copyWith(
+                                    color: AppColors.textDisabled,
+                                  ),
                                 ),
-                                radius: AppDimens.radiusL,
-                              ),
-                        UiUtils.addHorizontalSpaceM(),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.post.userName,
-                                style: AppTextStyles.body.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                relativeTime,
-                                style: AppTextStyles.caption.copyWith(
-                                  color: AppColors.textDisabled,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
 
-                  UiUtils.addVerticalSpaceS(),
+                    UiUtils.addVerticalSpaceS(),
 
-                  // Post info
-                  Container(
-                    padding: const EdgeInsets.all(AppDimens.spaceXS),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    // Post info
+                    Container(
+                      padding: const EdgeInsets.all(AppDimens.spaceXS),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.post.title,
+                            style: AppTextStyles.heading3,
+                          ),
+                          UiUtils.addVerticalSpaceS(),
+                          Text(
+                            widget.post.description,
+                            style: AppTextStyles.body,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    UiUtils.addVerticalSpaceS(),
+
+                    // Action buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(widget.post.title, style: AppTextStyles.heading3),
-                        UiUtils.addVerticalSpaceS(),
-                        Text(
-                          widget.post.description,
-                          style: AppTextStyles.body,
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.favorite_border,
+                              color: AppColors.textDisabled,
+                            ),
+                            UiUtils.addHorizontalSpaceXS(),
+                            Text(
+                              AppStrings.like,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.textDisabled,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.mode_comment_outlined,
+                              color: AppColors.textDisabled,
+                            ),
+                            UiUtils.addHorizontalSpaceXS(),
+                            Text(
+                              AppStrings.comment,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.textDisabled,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.share, color: AppColors.textDisabled),
+                            UiUtils.addHorizontalSpaceXS(),
+                            Text(
+                              AppStrings.share,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.textDisabled,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ),
 
-                  UiUtils.addVerticalSpaceS(),
+                    UiUtils.addVerticalSpaceL(),
 
-                  // Action buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.favorite_border,
-                            color: AppColors.textDisabled,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${widget.post.likesCount} likes',
+                          style: AppTextStyles.body.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
-                          UiUtils.addHorizontalSpaceXS(),
-                          Text(
-                            AppStrings.like,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.textDisabled,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.mode_comment_outlined,
-                            color: AppColors.textDisabled,
-                          ),
-                          UiUtils.addHorizontalSpaceXS(),
-                          Text(
-                            AppStrings.comment,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.textDisabled,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.share, color: AppColors.textDisabled),
-                          UiUtils.addHorizontalSpaceXS(),
-                          Text(
-                            AppStrings.share,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.textDisabled,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                  UiUtils.addVerticalSpaceL(),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${widget.post.likesCount} likes',
-                        style: AppTextStyles.body.copyWith(
-                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                      Text(
-                        '${widget.post.commentsCount} shares',
-                        style: AppTextStyles.body.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  UiUtils.addVerticalSpaceL(),
-
-                  // Comments
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          CommentWidget(
-                            comment: Comment(
-                              userName: "John Martin",
-                              userProfileImageUrl: null,
-                              comment: AppStrings.placeholderParagraph,
-                              likesCount: 0,
-                            ),
+                        Text(
+                          '${widget.post.commentsCount} shares',
+                          style: AppTextStyles.body.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
-                          if (index != 2) UiUtils.addVerticalSpaceL(),
-                        ],
-                      );
-                    },
-                  ),
-                ],
+                        ),
+                      ],
+                    ),
+
+                    UiUtils.addVerticalSpaceL(),
+
+                    // Comments
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            CommentWidget(
+                              comment: Comment(
+                                userName: "John Martin",
+                                userProfileImageUrl: null,
+                                comment: AppStrings.placeholderParagraph,
+                                likesCount: 0,
+                              ),
+                            ),
+                            if (index != 2) UiUtils.addVerticalSpaceL(),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
 
-          // Fixed input at bottom
-          AppTextInput(
-            controller: _textController,
-            focusNode: _focusNode,
-            onSend: () {
-              // handle sending comment
-              _textController.clear();
-            },
-            onAttach: () {
-              // handle attachment
-            },
-          ),
-        ],
+            // Fixed input at bottom
+            AppTextInput(
+              controller: _textController,
+              focusNode: _focusNode,
+              onSend: () {
+                // handle sending comment
+                _textController.clear();
+              },
+              onAttach: () {
+                // handle attachment
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
